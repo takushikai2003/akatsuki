@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>marker-less</title>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../three0.126/build/three.module.js",
+          "three/addons/": "../three0.126/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="device-orien-modal" class="device-orien-modal is-hidden">
+      <div class="device-orien-modal-inner">
+        <p>
+          このページでは端末の向きと方向を取得します。<br />
+          次に表示されるポップアップに従って「許可」を選択してください。
+        </p>
+        <button
+          id="device-orien-modal-button"
+          class="device-orien-modal-button"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+    <canvas id="canvas" class="canvas"></canvas>
+    <video src="" id="camera" class="camera" playsinline></video>
+
+
+    <script src="./main.js" type="module"></script>
+    <link rel="stylesheet" href="./style.css">
+
+  </body>
+</html>

@@ -1,0 +1,6 @@
+Three.scene
+-home
+-adventure
+
+
+・gltf,glbをインポートする際、blender側のオブジェクト分割が維持される
