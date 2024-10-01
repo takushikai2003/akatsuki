@@ -1,8 +1,7 @@
 import * as THREE from "three";
 import { DeviceOrientationControls } from "three/addons/controls/DeviceOrientationControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ObjectClickListener } from "../lib/ObjectClickListener.js";
-
+import { LoadGLTF } from "./LoadGLTF.js";
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -10,40 +9,68 @@ const canvas = document.getElementById("canvas");
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 30);
+const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
 camera.position.set(0, 0, 5);
 camera.lookAt(0, 0, 0);
 scene.add(camera);
 
 
-
-
-// GLTF形式のモデルデータを読み込む
-const loader = new GLTFLoader();
-// GLTFファイルのパスを指定
-const gltf = await loader.loadAsync('../3d_models/burokkori-.glb');
 // 読み込み後に3D空間に追加
-const burokkori_model = gltf.scene;
-burokkori_model.scale.set(3,3,3);
-
+const burokkori_model =  await LoadGLTF("../3d_models/lunchbox.glb");
+burokkori_model.scale.set(2,2,2);
 scene.add(burokkori_model);
 
 
-// const cube = createCube();
-// scene.add(cube);
+const lunchbox_model =  await LoadGLTF("../3d_models/lunchbox.glb");
+lunchbox_model.scale.set(1.8,1.8,1.8);
+camera.add(lunchbox_model);//常にcameraの前へ
+
+// カメラのFOVとアスペクト比に基づいてCubeを下端に配置
+const fov = camera.fov * (Math.PI / 180); // 角度をラジアンに変換
+const distance = 5;
+const heightAtDistance = 2 * Math.tan(fov / 2) * distance; // カメラからの距離における高さ
+// Cubeを画角の下端に配置 (カメラのローカル座標系で位置を設定)
+lunchbox_model.position.set(0, -heightAtDistance / 2 + lunchbox_model.children[0].geometry.boundingBox.max.y / 2, -distance);
 
 
 
+// ヘルパーを使うと、クリック判定が効かなくなる
+// GridHelper
+// const gridHelper = new THREE.GridHelper(200, 1);
+// scene.add(gridHelper);
+
+// AxesHelper
+// const axesHelper = new THREE.AxesHelper(180);
+// scene.add(axesHelper);
+
+
+
+let catched = false;
 const objClickListener = new ObjectClickListener(canvas,scene,camera);
 // objClickListener.add(cube, ()=>{alert("cube clicked!")});
-objClickListener.add(burokkori_model, async ()=>{
-    // alert("bro clicked!");
+objClickListener.add(burokkori_model, ()=>{
+    console.log("bro clicked!");
+
+    catched = true;
+
+    // // ワールド座標を取得
+    // const bro_world_coord = burokkori_model.getWorldPosition(new THREE.Vector3());
+    // const lunchbox_world_coord = lunchbox_model.getWorldPosition(new THREE.Vector3());
+    // console.log(bro_world_coord);
+    // console.log(lunchbox_world_coord);
+
+    // // lunchboxの位置へブロッコリーを飛ばす
+    // burokkori_model.parent.worldToLocal(lunchbox_model);
+    // // objectの座標を変更
+    // burokkori_model.position.copy(lunchbox_model);
+
+    // lunchbox_model.visible = false;
     
-    for(let i=0; i<50; i++){
-        burokkori_model.rotation.x += 1;
-        // burokkori_model.rotation.y += 1;
-        await wait(30);
-    }
+    // for(let i=0; i<50; i++){
+    //     burokkori_model.rotation.x += 1;
+    //     // burokkori_model.rotation.y += 1;
+    //     await wait(30);
+    // }
 });
 
 
@@ -78,170 +105,32 @@ renderer.setAnimationLoop(() => {
 
 
 
+
+const speed = 0.1; // 移動のスピード
+
+
+function tick(){
+    burokkori_model.rotation.x += 0.01;
+    burokkori_model.rotation.y += 0.01;
+
+    controls.update();
+
+    if(catched){
+        const targetPosition = lunchbox_model.position.clone(); // Cubeの位置を取得
+
+        // targetObject（ブロッコリー）を目標位置に向かって移動
+        burokkori_model.position.lerp(targetPosition, speed); // 線形補間で位置を更新
+    }
+
+    renderer.render(scene, camera);
+}
+
+
+
 function createCube(){
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshNormalMaterial();
     const object = new THREE.Mesh(geometry, material);
     object.position.set(0, 0, 0);
     return object;
-};
-
-
-function tick(){
-    burokkori_model.rotation.x += 0.01;
-    burokkori_model.rotation.y += 0.01;
-    controls.update();
-    renderer.render(scene, camera);
-};
-
-
-
-let deviceOrienModal = null;
-let deviceOrienModalButton = null;
-
-let video = null;
-let videoInput = null;
-let videoStream = null;
-
-
-const initVideo = () => {
-    video = document.getElementById("camera");
-    video.addEventListener("loadedmetadata", adjustVideo);
-
-    navigator.mediaDevices
-    .enumerateDevices()
-    .then((devices) => {
-        videoInput = devices.filter((device) => device.kind === "videoinput");
-        getVideo();
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-};
-
-const setVideo = () => {
-    return {
-        audio: false,
-        video: {
-            deviceId: videoInput,
-            facingMode: "environment",
-            width: { min: 1280, max: 1920 },
-            height: { min: 720, max: 1080 },
-        },
-    };
-};
-
-const getVideo = () => {
-    if (videoStream) {
-        videoStream.getTracks().forEach((track) => track.stop());
-    }
-    navigator.mediaDevices
-    .getUserMedia(setVideo())
-    .then(function (stream) {
-        video.srcObject = stream;
-        video.play();
-        videoStream = stream;
-    })
-    .catch(function (error) {
-        console.log(error);
-    alert(
-        "カメラの使用が拒否されています。\nページを再読み込みして使用を許可するか、ブラウザの設定をご確認ください。"
-    );
-    });
-};
-
-const adjustVideo = () => {
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const videoWidth = video.videoWidth;
-    const videoHeight = video.videoHeight;
-
-    let videoAspect = videoWidth / videoHeight;
-    let windowAspect = windowWidth / windowHeight;
-
-    if (windowAspect < videoAspect) {
-        let newWidth = videoAspect * windowHeight;
-        video.style.width = newWidth + "px";
-        video.style.marginLeft = -(newWidth - windowWidth) / 2 + "px";
-        video.style.height = windowHeight + "px";
-        video.style.marginTop = "0px";
-    }
-    else {
-        let newHeight = 1 / (videoAspect / windowWidth);
-        video.style.height = newHeight + "px";
-        video.style.marginTop = -(newHeight - windowHeight) / 2 + "px";
-        video.style.width = windowWidth + "px";
-        video.style.marginLeft = "0px";
-    }
-};
-
-const isIos = () => {
-    const ua = navigator.userAgent.toLowerCase();
-    return (
-        ua.indexOf("iphone") >= 0 ||
-        ua.indexOf("ipad") >= 0 ||
-        ua.indexOf("ipod") >= 0
-    );
-};
-
-const checkDeviceOrien = () => {
-    return new Promise((resolve, reject) => {
-        if (!isIos()) resolve("resolve");
-
-        const deviceOrienEvent = () => {
-            hideDeviceOrienModal();
-            window.removeEventListener("deviceorientation", deviceOrienEvent, false);
-            resolve("resolve");
-        };
-        window.addEventListener("deviceorientation", deviceOrienEvent, false);
-
-        deviceOrienModal = document.getElementById("device-orien-modal");
-        deviceOrienModalButton = document.getElementById("device-orien-modal-button");
-        const alertMessage =
-        "モーションセンサーの使用が拒否されました。\nこのページを楽しむには、デバイスモーションセンサーの使用を許可する必要があります。\nSafariのアプリを再起動して、モーションセンサーの使用（「動作と方向」へのアクセス）を許可をしてください。";
-        deviceOrienModal.classList.remove("is-hidden");
-
-        deviceOrienModalButton.addEventListener("click", () => {
-        if (
-            DeviceMotionEvent &&
-            (DeviceMotionEvent).requestPermission &&
-            typeof (DeviceMotionEvent).requestPermission === "function"
-        ) {
-            (DeviceMotionEvent).requestPermission().then((res) => {});
-        }
-        if (
-            DeviceOrientationEvent &&
-            (DeviceOrientationEvent).requestPermission &&
-            typeof (DeviceOrientationEvent).requestPermission === "function"
-        ) {
-            (DeviceOrientationEvent).requestPermission().then((res) => {
-                console.log(res);
-                if (res === "granted") {
-                    hideDeviceOrienModal();
-                    resolve("resolve");
-                }
-                else {
-                    alert(alertMessage);
-                    reject("resolve");
-                }
-            });
-        }
-        else {
-            alert(alertMessage);
-            reject("resolve");
-        }
-        });
-    });
-};
-
-const hideDeviceOrienModal = () => {
-    deviceOrienModal.classList.add("is-hidden");
-};
-
-checkDeviceOrien()
-.then(() => {
-    initVideo();
-})
-.catch((error) => {
-    console.log(error);
-});
+}

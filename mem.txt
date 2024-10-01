@@ -4,3 +4,5 @@ Three.scene
 
 
 ・gltf,glbをインポートする際、blender側のオブジェクト分割が維持される
+
+AxesHelperを使うと、クリック判定が出来ない（レイキャストの問題？）
