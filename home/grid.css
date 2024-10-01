@@ -1,4 +1,4 @@
-body{
+#grid_all{
     display: grid;
     width: 100vw;
     height: 100vh;
@@ -23,9 +23,9 @@ body{
 }
 
 #img_completed{
-    max-width:60%;
-    max-height:95%;
-    object-fit:contain;
+    max-width: 60%;
+    max-height: 95%;
+    object-fit: contain;
     border: 3px solid dodgerblue;
 }
 
@@ -39,7 +39,7 @@ body{
     height: 100%;
 }
 
-#img_make_bento_wrap{
+#img_search_chara_wrap{
     grid-row: 1/2;
     display: flex;
     align-items: center;
@@ -56,14 +56,17 @@ body{
 }
 
 
-#img_make_bento{
-    max-width:95%;
-    max-height:95%;
+#img_search_chara{
+    /* max-width:95%;
+    max-height:95%; */
+    width: 95%;
+    height: 95%;
     border: 3px solid tomato;
+    font-size: 30px;
 }
 
 #img_menu{
-    max-width:95%;
-    max-height:95%;
+    max-width: 95%;
+    max-height: 95%;
     border: 3px solid black;
 }

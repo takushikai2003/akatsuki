@@ -47,3 +47,13 @@ body {
     top: 0;
     left: 0;
 }
+
+
+/*-------------------*/
+
+#go_home{
+    position: fixed;
+    z-index: 20;
+
+    font-size: 20px;
+}

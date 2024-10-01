@@ -88,8 +88,8 @@ function createCube(){
 
 
 function tick(){
-    // burokkori_model.rotation.x += 0.01;
-    // burokkori_model.rotation.y += 0.01;
+    burokkori_model.rotation.x += 0.01;
+    burokkori_model.rotation.y += 0.01;
     controls.update();
     renderer.render(scene, camera);
 };

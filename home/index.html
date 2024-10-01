@@ -5,7 +5,7 @@
       name="viewport"
       content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <title>marker-less</title>
+    <title>home</title>
 
     <script type="importmap">
       {
@@ -17,26 +17,29 @@
     </script>
   </head>
   <body>
-    <div id="canvas_wrap">
-      <canvas id="canvas" class="canvas"></canvas>
-    </div>
-
-    <div id="img_completed_wrap">
-      <img id="img_completed" src="./images/completed.jpg">
-    </div>
-
-    <div id="imgs_right_wrap">
-      <div id="img_make_bento_wrap">
-        <img id="img_make_bento" src="./images/make_bento.png">
+    <button id="open_map" onclick="location.href='../map'">マップを開く</button>
+    <div id="grid_all">
+      <div id="canvas_wrap">
+        <canvas id="canvas" class="canvas"></canvas>
       </div>
-      <div id="img_menu_wrap">
-        <img id="img_menu" src="./images/menu.png">
+  
+      <div id="img_completed_wrap">
+        <img id="img_completed" src="./images/completed.jpg" onclick="alert('coming soon...')">
       </div>
+  
+      <div id="imgs_right_wrap">
+        <div id="img_search_chara_wrap">
+          <button id="img_search_chara" onclick="location.href='../adventure'">探す</button>
+        </div>
+        <div id="img_menu_wrap">
+          <img id="img_menu" src="./images/menu.png">
+        </div>
+      </div>
+  
+      <!-- <script src="./main.js" type="module"></script> -->
+      <link rel="stylesheet" href="./style.css">
+  
+      <link rel="stylesheet" href="./grid.css">
     </div>
-
-    <!-- <script src="./main.js" type="module"></script> -->
-    <link rel="stylesheet" href="./style.css">
-
-    <link rel="stylesheet" href="./grid.css">
   </body>
 </html>

@@ -5,7 +5,7 @@
       name="viewport"
       content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <title>marker-less</title>
+    <title>adventure</title>
 
     <script type="importmap">
       {
@@ -17,6 +17,8 @@
     </script>
   </head>
   <body>
+    <button id="go_home" onclick="location.href='../home'">ホームへ</button>
+    
     <div id="device-orien-modal" class="device-orien-modal is-hidden">
       <div class="device-orien-modal-inner">
         <p>
@@ -33,7 +35,6 @@
     </div>
     <canvas id="canvas" class="canvas"></canvas>
     <video src="" id="camera" class="camera" playsinline></video>
-
 
     <script src="./main.js" type="module"></script>
     <link rel="stylesheet" href="./style.css">
