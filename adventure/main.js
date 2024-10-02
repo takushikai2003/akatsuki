@@ -16,13 +16,13 @@ scene.add(camera);
 
 
 // 読み込み後に3D空間に追加
-const burokkori_model =  await LoadGLTF("../3d_models/lunchbox.glb");
-burokkori_model.scale.set(2,2,2);
+const burokkori_model =  await LoadGLTF("../3d_models/burokkori-.glb");
+burokkori_model.scale.set(1.8, 1.8, 1.8);
 scene.add(burokkori_model);
 
 
 const lunchbox_model =  await LoadGLTF("../3d_models/lunchbox.glb");
-lunchbox_model.scale.set(1.8,1.8,1.8);
+lunchbox_model.scale.set(1.8, 1.8, 1.8);
 camera.add(lunchbox_model);//常にcameraの前へ
 
 // カメラのFOVとアスペクト比に基づいてCubeを下端に配置
@@ -52,19 +52,6 @@ objClickListener.add(burokkori_model, ()=>{
     console.log("bro clicked!");
 
     catched = true;
-
-    // // ワールド座標を取得
-    // const bro_world_coord = burokkori_model.getWorldPosition(new THREE.Vector3());
-    // const lunchbox_world_coord = lunchbox_model.getWorldPosition(new THREE.Vector3());
-    // console.log(bro_world_coord);
-    // console.log(lunchbox_world_coord);
-
-    // // lunchboxの位置へブロッコリーを飛ばす
-    // burokkori_model.parent.worldToLocal(lunchbox_model);
-    // // objectの座標を変更
-    // burokkori_model.position.copy(lunchbox_model);
-
-    // lunchbox_model.visible = false;
     
     // for(let i=0; i<50; i++){
     //     burokkori_model.rotation.x += 1;
@@ -116,7 +103,7 @@ function tick(){
     controls.update();
 
     if(catched){
-        const targetPosition = lunchbox_model.position.clone(); // Cubeの位置を取得
+        const targetPosition = lunchbox_model.getWorldPosition(new THREE.Vector3()).clone(); // 弁当箱のグローバル座標を取得
 
         // targetObject（ブロッコリー）を目標位置に向かって移動
         burokkori_model.position.lerp(targetPosition, speed); // 線形補間で位置を更新
