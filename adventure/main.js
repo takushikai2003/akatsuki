@@ -15,7 +15,6 @@ camera.lookAt(0, 0, 0);
 scene.add(camera);
 
 
-// 読み込み後に3D空間に追加
 const burokkori_model =  await LoadGLTF("../3d_models/burokkori-.glb");
 burokkori_model.scale.set(1.8, 1.8, 1.8);
 scene.add(burokkori_model);
@@ -33,12 +32,14 @@ const heightAtDistance = 2 * Math.tan(fov / 2) * distance; // カメラからの
 lunchbox_model.position.set(0, -heightAtDistance / 2 + lunchbox_model.children[0].geometry.boundingBox.max.y / 2, -distance);
 
 
+const tomato_model =  await LoadGLTF("../3d_models/tomato.glb");
+tomato_model.scale.set(1.5, 1.5, 1.5);
+tomato_model.position.x -= 0.3;
+lunchbox_model.add(tomato_model);
+
+
 
 // ヘルパーを使うと、クリック判定が効かなくなる
-// GridHelper
-// const gridHelper = new THREE.GridHelper(200, 1);
-// scene.add(gridHelper);
-
 // AxesHelper
 // const axesHelper = new THREE.AxesHelper(180);
 // scene.add(axesHelper);
@@ -59,15 +60,6 @@ objClickListener.add(burokkori_model, ()=>{
     //     await wait(30);
     // }
 });
-
-
-async function wait(ms) {
-    return new Promise((resolve,reject)=>{
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
-}
 
 
 
@@ -97,16 +89,27 @@ const speed = 0.1; // 移動のスピード
 
 
 function tick(){
-    burokkori_model.rotation.x += 0.01;
-    burokkori_model.rotation.y += 0.01;
 
     controls.update();
 
     if(catched){
-        const targetPosition = lunchbox_model.getWorldPosition(new THREE.Vector3()).clone(); // 弁当箱のグローバル座標を取得
+        burokkori_model.rotation.x = 0;
+        burokkori_model.rotation.y = 0;
 
-        // targetObject（ブロッコリー）を目標位置に向かって移動
+        const targetPosition = lunchbox_model.getWorldPosition(new THREE.Vector3()).clone(); // 弁当箱のグローバル座標を取得
+        // // targetObject（ブロッコリー）を目標位置に向かって移動
+        targetPosition.x += 0.5;
         burokkori_model.position.lerp(targetPosition, speed); // 線形補間で位置を更新
+
+        const targetWorldRot = new THREE.Euler();
+        lunchbox_model.getWorldQuaternion(targetWorldRot);
+        burokkori_model.rotation.set(targetWorldRot.x, targetWorldRot.y, targetWorldRot.z);
+
+        // burokkori_model.position.set(targetPosition.x-0.6, targetPosition.y, targetPosition.z);
+    }
+    else{
+        burokkori_model.rotation.x += 0.01;
+        burokkori_model.rotation.y += 0.01;
     }
 
     renderer.render(scene, camera);
@@ -120,4 +123,14 @@ function createCube(){
     const object = new THREE.Mesh(geometry, material);
     object.position.set(0, 0, 0);
     return object;
+}
+
+
+
+async function wait(ms) {
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve();
+        }, ms);
+    });
 }
