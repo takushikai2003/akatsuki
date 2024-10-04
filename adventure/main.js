@@ -13,17 +13,26 @@ console.log(geolocation);
 
 const radius = 30;//[m]キャラを出現させる半径
 
+let noSpots = true;
 for(const spot of spotsData){
     if(
         calcCoordinateDistance(geolocation.latitude, geolocation.longitude, spot.latitude, spot.longitude)
         <=
         radius + geolocation.accuracy
     ){
+        noSpots = false;
         console.log(spot.name);
         startARScene();
         break;
     }
 }
+
+
+if(noSpots){
+    alert("対象地域ではありません");
+    console.log("対象地域ではありません");
+}
+
 
 
 function startARScene(modelId){
