@@ -141,10 +141,18 @@ const hideDeviceOrienModal = () => {
     deviceOrienModal.classList.add("is-hidden");
 };
 
-checkDeviceOrien()
-.then(() => {
-    initVideo();
-})
-.catch((error) => {
-    console.log(error);
-});
+
+
+export function startUserCamera(){
+    return new Promise((resolve,reject)=>{
+        checkDeviceOrien()
+        .then(() => {
+            initVideo();
+            resolve();
+        })
+        .catch((error) => {
+            console.log(error);
+            reject(error);
+        });
+    });
+}

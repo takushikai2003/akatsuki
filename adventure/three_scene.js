@@ -4,7 +4,7 @@ import { ObjectClickListener } from "../lib/ObjectClickListener.js";
 import { LoadGLTF } from "../lib/LoadGLTF.js";
 
 
-export async function sceneInit(){
+export async function startThreeScene(){
 
     const w = window.innerWidth;
     const h = window.innerHeight;
