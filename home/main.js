@@ -1,10 +1,12 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { ObjectClickListener } from "../lib/ObjectClickListener.js";
 
 
-const w = window.innerWidth;
-const h = window.innerHeight;
+const canvas_wrap = document.getElementById("canvas_wrap");
+
+const w = canvas_wrap.clientWidth;
+const h = canvas_wrap.clientHeight;
+
 const canvas = document.getElementById("canvas");
 
 const scene = new THREE.Scene();
@@ -14,6 +16,39 @@ camera.position.set(0, 0, 5);
 camera.lookAt(0, 0, 0);
 scene.add(camera);
 
+
+
+function LoadTexture(path){
+    return new Promise((resolve,reject)=>{
+        new THREE.TextureLoader().load(path,function(tex){
+            resolve(tex);
+        });
+    })
+}
+
+//Load Background
+const bg_canvas = document.createElement("canvas");
+const bg_canvas_ctx = bg_canvas.getContext("2d");
+const bg_img = new Image();
+bg_img.src = "./images/背景１.png";
+
+bg_img.onload = ()=>{
+
+    bg_canvas.width = w;
+    bg_canvas.height = h;
+
+    const im_w = bg_img.width;
+    const im_h = bg_img.height;
+
+    const sx = 0;
+    const sy = 0;
+
+    const aspect_ratio = w/h;
+    bg_canvas_ctx.drawImage(bg_img, sx, sy, im_w, im_w * aspect_ratio, 0, 0, w, h);
+
+    const croppedTexture = new THREE.CanvasTexture(bg_canvas);
+    scene.background = croppedTexture;
+}
 
 
 
@@ -27,60 +62,21 @@ scene.add(camera);
 
 // scene.add(burokkori_model);
 
-
-const cube = createCube();
-scene.add(cube);
-
-
-
-// const objClickListener = new ObjectClickListener(canvas,scene,camera);
-// // objClickListener.add(cube, ()=>{alert("cube clicked!")});
-// objClickListener.add(burokkori_model, async ()=>{
-//     // alert("bro clicked!");
-    
-//     for(let i=0; i<50; i++){
-//         burokkori_model.rotation.x += 1;
-//         // burokkori_model.rotation.y += 1;
-//         await wait(30);
-//     }
-// });
-
-
-async function wait(ms) {
-    return new Promise((resolve,reject)=>{
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
-}
-
-
-
 const light = new THREE.AmbientLight(0xFFFFFF, 3.0);
 scene.add(light);
 
 
 const renderer =  new THREE.WebGLRenderer({
     antialias: true,
-    alpha: true,
+    // alpha: true,
     canvas: canvas,
 });
-renderer.setClearColor(0x000000, 0);
+// renderer.setClearColor(0x000000, 0);
 renderer.setSize(w, h);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setAnimationLoop(() => {
     tick();
 });
-
-
-
-function createCube(){
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshNormalMaterial();
-    const object = new THREE.Mesh(geometry, material);
-    object.position.set(0, 0, 0);
-    return object;
-};
 
 
 function tick(){
