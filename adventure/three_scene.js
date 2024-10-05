@@ -92,9 +92,7 @@ export async function startThreeScene(){
     
     
     function tick(){
-    
-        controls.update();
-    
+        
         if(catched){
             burokkori_model.rotation.x = 0;
             burokkori_model.rotation.y = 0;
@@ -111,6 +109,8 @@ export async function startThreeScene(){
             // burokkori_model.position.set(targetPosition.x-0.6, targetPosition.y, targetPosition.z);
         }
         else{
+            controls.update();
+
             burokkori_model.rotation.x += 0.01;
             burokkori_model.rotation.y += 0.01;
         }
