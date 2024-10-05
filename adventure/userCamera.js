@@ -101,7 +101,7 @@ const checkDeviceOrien = () => {
         deviceOrienModal = document.getElementById("device-orien-modal");
         deviceOrienModalButton = document.getElementById("device-orien-modal-button");
         const alertMessage =
-        "モーションセンサーの使用が拒否されました。\nこのページを楽しむには、デバイスモーションセンサーの使用を許可する必要があります。\nSafariのアプリを再起動して、モーションセンサーの使用（「動作と方向」へのアクセス）を許可をしてください。";
+        "モーションセンサーの使用が拒否されました。\nこのページを開くには、デバイスモーションセンサーの使用を許可する必要があります。\nSafariのアプリを再起動して、モーションセンサーの使用（「動作と方向」へのアクセス）を許可をしてください。";
         deviceOrienModal.classList.remove("is-hidden");
 
         deviceOrienModalButton.addEventListener("click", () => {
