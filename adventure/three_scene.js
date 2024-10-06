@@ -14,7 +14,10 @@ export async function startThreeScene(){
     
     const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
     camera.position.set(0, 0, 5);
-    camera.lookAt(0, 0, 0);
+
+    // ランダムな向きを向かせる
+    // camera.lookAt(Math.random()*10, Math.random()*10, Math.random()*10);
+    camera.lookAt(10, 0, 10000);
     scene.add(camera);
     
     
