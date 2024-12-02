@@ -9,7 +9,7 @@
 
 
 import { cardsData } from "../data/cards.js";
-import { getCollectedCardIds } from "../lib/collectedCardIds.js";
+import { getCollectedCardIds, addCollectedCardId } from "../lib/collectedCardIds.js";
 
 const cardContainer = document.getElementById("card-container");
 const characterImage = document.querySelector("#character-image img");
@@ -32,7 +32,7 @@ function displayCards(cards) {
         const collected = collectedCardIds.includes(card.id);
 
         const name = collected ? card.name : "???";
-        const image = collected ? card.image : "./guzai_img/hatena.png";
+        const image = collected ? card.image : "../guzai_images/hatena.png";
         
         // idの表示が3桁になるようにする
         cardElement.innerHTML = `
@@ -79,7 +79,7 @@ function updateCharacterDetails(card) {
         characterScore.textContent = `得点：${card.score}点`;
     }
     else{
-        characterImage.src = "./guzai_img/hatena.png";
+        characterImage.src = "../guzai_images/hatena.png";
         characterName.textContent = "???";
         characterId.textContent = `図鑑No.${card.id}`;
         characterScore.textContent = "得点：???点";
@@ -89,3 +89,5 @@ function updateCharacterDetails(card) {
 
 displayCards(cardsData);
 updateCharacterDetails(cardsData[0]);
+
+addCollectedCardId(1);
