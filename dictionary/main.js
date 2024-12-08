@@ -91,3 +91,6 @@ displayCards(cardsData);
 updateCharacterDetails(cardsData[0]);
 
 addCollectedCardId(1);
+addCollectedCardId(4);
+addCollectedCardId(5);
+addCollectedCardId(7);
