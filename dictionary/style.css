@@ -8,12 +8,16 @@ body {
     height: 100vh;
 }
 
-/* 上部セクション（背景画像を共有） */
+/* 上部セクション*/
 #top-section {
     background-image: url("./UI_img/haikei.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
+    background-size: 50%;
+}
+
+#BGrgba{
+    height: 100%;
+    background: rgba(255,255,255, 0.5);
 }
 
 /* ヘッダー */
@@ -25,25 +29,30 @@ header {
 }
 
 header h1 {/*「食べもの図鑑」の部分*/
+    font-size: 30px;
+    font-weight: bold;
+    color: #3f7132;
+    text-shadow: 2px 2px 0 #fff,-2px -2px 0 #fff,-2px 2px 0 #fff,  2px -2px 0 #fff,
+    2px 0 0 #fff, -2px  0 0 #fff,
+    0 2px 0 #fff,  0 -2px 0 #fff;
+    /*
     padding: 0 10px;
-    font-size: 25px;
-    color: #000000;
     background-color: #FFF;
     border-radius: 10px;
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
-    font-weight: bold;
     border: solid 2px #d27d00;
     padding: 5px 10px;
+    */
 }
 
 header a {/*「ホームへ」ボタン*/
-    color: #FFF;
-    background: #faa92e;
+    color: #3f7132;
+    background: #ffe179;
     border-radius: 4px;
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
     font-weight: bold;
-    border: solid 2px #d27d00;
-    padding: 5px;
+    border: solid 2px #fff;
+    padding: 5px 10px;
 }
 
 /* キャラクター詳細 */
@@ -63,8 +72,8 @@ header a {/*「ホームへ」ボタン*/
     flex: 1;
     padding: 0 20px;
     text-align: center;
-    background-color: rgb(255, 221, 72);
-    border-radius: 50%;
+    background-color: #ffe179;
+    border-radius: 25px;
     color: white;
     text-shadow: 1px 1px 3px rgba(78, 41, 2, 0.7);
     padding: 10px;
@@ -85,7 +94,7 @@ header a {/*「ホームへ」ボタン*/
     flex: 1;
     padding: 10px;
     overflow-y: auto;
-    background-color: rgb(255, 254, 197);
+    background-color: #ffe179;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(130px, auto));
@@ -99,7 +108,7 @@ header a {/*「ホームへ」ボタン*/
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     padding: 10px;
-    
+    border: solid 2px #fff;
 }
 
 .card img {
@@ -127,4 +136,7 @@ header a {/*「ホームへ」ボタン*/
 }
 .card-color-gray{
     background-color: rgb(213, 213, 213);
+}
+.card-color-hatena{
+    background-color: #f2f2f2;
 }

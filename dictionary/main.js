@@ -33,7 +33,8 @@ function displayCards(cards) {
 
         const name = collected ? card.name : "???";
         const image = collected ? card.image : "../guzai_images/hatena.png";
-        
+        const category = collected ? card.category : "???";
+
         // idの表示が3桁になるようにする
         cardElement.innerHTML = `
             <img src="${image}" alt="${name}">
@@ -41,7 +42,7 @@ function displayCards(cards) {
             <p>${String(card.id).padStart(3, '0')}</p>
             `;
 
-        switch (card.category) {
+        switch (category) {
             case "rice":
                 cardElement.classList.add("card-color-pink");
                 break;
@@ -50,6 +51,9 @@ function displayCards(cards) {
                 break;
             case "trash":
                 cardElement.classList.add("card-color-gray");
+                break;
+            case "???":
+                cardElement.classList.add("card-color-hatena");
                 break;
         }
 
@@ -91,6 +95,5 @@ displayCards(cardsData);
 updateCharacterDetails(cardsData[0]);
 
 addCollectedCardId(1);
-addCollectedCardId(4);
-addCollectedCardId(5);
 addCollectedCardId(7);
+addCollectedCardId(10);
