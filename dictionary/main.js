@@ -1,73 +1,20 @@
-/**
- * @typedef {Object} Card
- * @property {number} id
- * @property {string} name
- * @property {string} image
- * @property {number} score
- * @property {"rice" | "vegetable" | "trash"} category
- */
-
-
 import { cardsData } from "../data/cards.js";
 import { getCollectedCardIds, addCollectedCardId } from "../lib/collectedCardIds.js";
+import { CardList } from "../componets/CardList.js";
+
 
 const cardContainer = document.getElementById("card-container");
+const cardList = new CardList(cardContainer);
+cardList.addEventListener("clickCard", (event) => {
+    updateCharacterDetails(event.detail.card);
+});
+
+
 const characterImage = document.querySelector("#character-image img");
 const characterName = document.getElementById("character-name");
 const characterId = document.getElementById("character-id");
 const characterScore = document.getElementById("character-score");
 
-
-/**
- * カードのデータを表示する
- * @param {Card[]} cards 
- */
-function displayCards(cards) {
-    const collectedCardIds = getCollectedCardIds();
-
-    cards.forEach(card => {
-        const cardElement = document.createElement("div");
-        cardElement.classList.add("card");
-
-        const collected = collectedCardIds.includes(card.id);
-
-        const name = collected ? card.name : "???";
-        const image = collected ? card.image : "../guzai_images/hatena.png";
-        const category = collected ? card.category : "???";
-
-        // idの表示が3桁になるようにする
-        cardElement.innerHTML = `
-            <img src="${image}" alt="${name}">
-            <h3>${name}</h3>
-            <p>${String(card.id).padStart(3, '0')}</p>
-            `;
-
-        switch (category) {
-            case "rice":
-                cardElement.classList.add("card-color-pink");
-                break;
-            case "vegetable":
-                cardElement.classList.add("card-color-orange");
-                break;
-            case "trash":
-                cardElement.classList.add("card-color-gray");
-                break;
-            case "???":
-                cardElement.classList.add("card-color-hatena");
-                break;
-        }
-
-        cardContainer.appendChild(cardElement);
-
-
-        // クリックしたらキャラクター情報を更新
-        cardElement.addEventListener("click", () => {
-            updateCharacterDetails(card);
-        });
-        
-    });
-}
- 
 
 /** キャラクター情報を更新する
  * @param {Card} card 
@@ -91,7 +38,7 @@ function updateCharacterDetails(card) {
 }
 
 
-displayCards(cardsData);
+cardList.displayCards(cardsData);
 updateCharacterDetails(cardsData[0]);
 
 addCollectedCardId(1);
