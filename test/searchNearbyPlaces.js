@@ -15,14 +15,34 @@ export function searchNearbyPlaces(lat, lng, radius = 100, type = ["store"]) {
             radius: radius, // 検索半径
             type: type, // 場所の種類を指定
         };
-    
-        // Nearby Searchを実行
-        service.nearbySearch(request, (results, status) => {
+
+
+           // Nearby Searchを実行
+        service.nearbySearch(request, async (results, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                // 成功時
-                resolve(results);
-            } else {
-                // エラー時
+                const detailedPlaces = await Promise.all(results.map(async (place) => {
+                    const request = {
+                        placeId: place.place_id,
+                        fields: ['name', 'reviews'],
+                    };
+
+                    const placeDetails = await new Promise((resolve, reject) => {
+                        service.getDetails(request, (place, status) => {
+                            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                resolve(place);
+                            }
+                            else {
+                                reject(status);
+                            }
+                        });
+                    });
+
+                    return placeDetails;
+                }));
+
+                resolve(detailedPlaces);
+            }
+            else {
                 reject(status);
             }
         });
