@@ -28,8 +28,8 @@
     transform: translate(-50%, -45%);
 
     width: 80%;
-    height: 50%;
-    background-color:rgba(0,0,225,0.5);
+    max-height: 50%;
+    /*background-color:rgba(0,0,0,0.5);*/
 
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -39,7 +39,7 @@
 }
 
 .modal_content{
-    background-color: white;
+    background-color: #abd5a2;
 }
 
 .modal_content img{
