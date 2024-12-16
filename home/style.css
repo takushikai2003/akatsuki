@@ -9,6 +9,13 @@ img{
     object-fit: contain;
 }
 
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
 .canvas {
     position: fixed;
     top: 0;
