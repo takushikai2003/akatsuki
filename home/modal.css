@@ -40,6 +40,7 @@
 
 .modal_content{
     background-color: #abd5a2;
+    border-radius: 5px;
 }
 
 .modal_content img{
