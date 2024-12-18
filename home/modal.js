@@ -11,6 +11,11 @@ function addLoginBonusCharacters(cardDatas){
         newContent.classList.add('modal_content');
 
         const characterImage=document.createElement('img');
+        characterImage.classList.add('characterImage');
+        if(card.got) {
+            const gotImage=document.createElement('img');
+            gotImage.classList.add('gotImage');
+        }
         characterImage.src=card.image;
 
         newContent.appendChild(characterImage);
@@ -18,17 +23,44 @@ function addLoginBonusCharacters(cardDatas){
     }
 }
 
-/*ランダムな具材群を作る*/
+/*ランダムな9つのidを作る*/
 const ids = loginCardsData.map(item => item.id);
-function getRandomCards(ids,cardsLength){
-    const randomNumbers=[];
+function getRandomIds(ids,cardsLength){
+    const randomIds=[];
 
     for(let i=0;i<cardsLength;i++){
-        const randomNumber=Math.floor(Math.random()*ids.length);
-        randomNumbers.push(ids[randomNumber]);
+        const randomId=Math.floor(Math.random()*ids.length);
+        randomIds.push(ids[randomId]);
     }
-    return randomNumbers.map(id=>loginCardsData.find(item=>item.id===id));
+    return randomIds;
 }
 
-const randomCardsData=getRandomCards(ids,cardsLength);
-addLoginBonusCharacters(randomCardsData);
+/*９つのidとゲットしたかどうかをローカルストレージに記録する(falseはgotの変数)*/
+function putLoginBonusData(Ids){
+    const LoginBonusData=Ids.map(id=>[id,false]);
+    localStorage.setItem('LoginBonusData', JSON.stringify(LoginBonusData));
+}
+
+/*ローカルストレージからデータを持ってくる
+  カードの情報にgot=true/falseを付け加えた配列を返す
+*/
+function getLoginBonusData(){
+    // LBdataの各要素は[id,false/true]という形式
+    const LBdata=JSON.parse(localStorage.getItem('LoginBonusData'));
+    return LBdata.map(([id,got])=>{
+        const cardData=loginCardsData.find(item=>item.id===id);
+        return {...cardData,got};
+    });
+}
+
+
+/*idが一致する具材情報をloginCardsDataから持ってくる*/
+function getCardsData(Ids){
+    return Ids.map(id=>loginCardsData.find(item=>item.id===id));
+}
+
+
+const randomIds=getRandomIds(ids,cardsLength);
+putLoginBonusData(randomIds);
+const data=getLoginBonusData();
+addLoginBonusCharacters(data);
