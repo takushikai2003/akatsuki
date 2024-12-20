@@ -1,12 +1,25 @@
-import { loginCardsData } from "../data/loginBonus.js";
+import { loginCardsData } from "../data/loginCards.js";
+import { addLoginCardsData,getLoginCardsData } from "../lib/loginBonus.js";
 
 const modalContents = document.getElementById("modal_contents");
 const cardsLength = 9;//ログインボーナス画面表示時、表示させる具材の個数は９個
 
-/*具材の要素を追加*/
-function addLoginBonusCharacters(cardDatas){
-    for(let i=0;i<cardDatas.length;i++){
-        const card=cardDatas[i];
+
+/*ローカルストレージからデータを取得し、具材の要素を表示*/
+function renderLoginCards(){
+
+    /*ローカルストレージから取得*/
+    // data: [id, boolean]形式の配列
+    const data=getLoginCardsData();
+
+    // idをカードの情報に変換し、boolean値をgotとする
+    const cardsData= data.map(([id,got])=>{
+        const cardData=loginCardsData.find(item=>item.id===id);
+        return {...cardData,got};
+    });
+
+    for(let i=0;i<cardsData.length;i++){
+        const card=cardsData[i];
         const newContent =document.createElement('div');
         newContent.classList.add('modal_content');
 
@@ -23,44 +36,21 @@ function addLoginBonusCharacters(cardDatas){
     }
 }
 
-/*ランダムな9つのidを作る*/
-const ids = loginCardsData.map(item => item.id);
-function getRandomIds(ids,cardsLength){
+function init(){
+    /*ランダムな9つのidを作る*/
+    const ids = loginCardsData.map(item => item.id);
     const randomIds=[];
 
     for(let i=0;i<cardsLength;i++){
         const randomId=Math.floor(Math.random()*ids.length);
         randomIds.push(ids[randomId]);
     }
-    return randomIds;
-}
-
-/*９つのidとゲットしたかどうかをローカルストレージに記録する(falseはgotの変数)*/
-function putLoginBonusData(Ids){
-    const LoginBonusData=Ids.map(id=>[id,false]);
-    localStorage.setItem('LoginBonusData', JSON.stringify(LoginBonusData));
-}
-
-/*ローカルストレージからデータを持ってくる
-  カードの情報にgot=true/falseを付け加えた配列を返す
-*/
-function getLoginBonusData(){
-    // LBdataの各要素は[id,false/true]という形式
-    const LBdata=JSON.parse(localStorage.getItem('LoginBonusData'));
-    return LBdata.map(([id,got])=>{
-        const cardData=loginCardsData.find(item=>item.id===id);
-        return {...cardData,got};
-    });
+    /*idの後ろにfalse(gotの要素)を付け加える*/
+    const initData=randomIds.map(id=>[id,false]);
+    /*ローカルストレージへ*/
+    addLoginCardsData(initData);
 }
 
 
-/*idが一致する具材情報をloginCardsDataから持ってくる*/
-function getCardsData(Ids){
-    return Ids.map(id=>loginCardsData.find(item=>item.id===id));
-}
-
-
-const randomIds=getRandomIds(ids,cardsLength);
-putLoginBonusData(randomIds);
-const data=getLoginBonusData();
-addLoginBonusCharacters(data);
+init();
+renderLoginCards();
