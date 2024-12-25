@@ -17,7 +17,7 @@ export function searchNearbyPlaces(lat, lng, radius = 100, type = ["store"]) {
         };
 
 
-           // Nearby Searchを実行
+        // Nearby Searchを実行
         service.nearbySearch(request, async (results, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 const detailedPlaces = await Promise.all(results.map(async (place) => {
