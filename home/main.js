@@ -1,10 +1,15 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoginModal } from "../componets/loginModal.js";
+import { isLoginedToday } from "../lib/loginBonus.js";
 
-// ここにセッションの判定がいる
-const loginModal = new LoginModal(document.body);
-loginModal.display();
+
+
+if(!isLoginedToday()){
+    const loginModal = new LoginModal(document.body);
+    loginModal.display();
+}
+
 
 const canvas_wrap = document.getElementById("canvas_wrap");
 
