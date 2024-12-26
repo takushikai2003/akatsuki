@@ -1,6 +1,7 @@
-import { loginCardsData } from "../data/loginCards.js";
+import { availableLoginBonusIds } from "../data/loginCards.js";
 import { getLoginBonusCollection, earnLoginBonus, setNewLoginBonusCollection } from "../lib/loginBonus.js";
 import { createElementFromHtmlString } from "../lib/createElementFromHtmlString.js";
+import { cardsData, getCardDataById } from "../data/cards.js";
 
 
 export class LoginModal{
@@ -40,7 +41,7 @@ export class LoginModal{
         // 返ってくるデータの形式は？
         // { id: 1, name: "おにぎり", image: "../guzai_images/onigiri.png", score: 130, category: "rice", got: true }
         const cardsData = data.map(([id,got])=>{
-            const cardData = loginCardsData.find(item => item.id===id);
+            const cardData = getCardDataById(id);
             return {...cardData,got};
         });
 

@@ -41,6 +41,5 @@ function updateCharacterDetails(card) {
 cardList.displayCards(cardsData);
 updateCharacterDetails(cardsData[0]);
 
-addCollectedCardId(1);
 addCollectedCardId(7);
 addCollectedCardId(10);

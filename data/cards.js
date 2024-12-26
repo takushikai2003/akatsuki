@@ -15,3 +15,8 @@ export const cardsData = [
     { id: 9, name: "空き缶", image: "../guzai_images/akikan.png", score: -100, category: "trash" },
     { id: 10, name: "長靴", image: "../guzai_images/nagagutu.png", score: -50, category: "trash" },
 ];
+
+
+export function getCardDataById(id){
+    return cardsData.find(card => card.id === id);
+}

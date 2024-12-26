@@ -1,8 +1,8 @@
 // ログインボーナス時にここからCardデータを取得して表示させる
+
 /**
- * @type {Card[]} loginCardsData 
+ * @type {number[]} availableLoginBonusIds
  */
-export const loginCardsData = [
-    { id: 1, name: "おにぎり", image: "../guzai_images/onigiri.png", score: 130, category: "rice" },
-    { id: 3, name: "とまと", image: "../guzai_images/tomato.png", score: 100, category: "vegetable" },
-];
+// ログインボーナスとして取得できるidの配列
+// cardsDataのidと一致する
+export const availableLoginBonusIds = [1, 3];
