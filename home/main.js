@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoginModal } from "../componets/loginModal.js";
 
-
+// ここにセッションの判定がいる
 const loginModal = new LoginModal(document.body);
 loginModal.display();
 

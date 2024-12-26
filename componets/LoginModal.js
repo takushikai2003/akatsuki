@@ -1,11 +1,20 @@
 import { loginCardsData } from "../data/loginCards.js";
-import { getLoginBonusCollection } from "../lib/loginBonus.js";
+import { getLoginBonusCollection, earnLoginBonus, setNewLoginBonusCollection } from "../lib/loginBonus.js";
 import { createElementFromHtmlString } from "../lib/createElementFromHtmlString.js";
 
 
 export class LoginModal{
     constructor(container){
         this.container = container;
+
+        let data = getLoginBonusCollection();
+        // すべて取得済みの場合新しく生成
+        if(data.every(item => item[1] === true)){
+            data = setNewLoginBonusCollection();
+        }
+
+        earnLoginBonus();
+        // 図鑑への追加処理が要る
     }
 
 
@@ -13,13 +22,12 @@ export class LoginModal{
         const element = createElementFromHtmlString(`
             <div id="modal_overlay" class="modal">
                 <div id="modal_wrap">
-                    <img id="modal_back_img" src="images_login_bonus/haikei.png">
+                    <img id="modal_back_img" src="${new URL("images_login_bonus/haikei.png", import.meta.url)}">
                 <div id="modal_contents"></div>
                 </div>
             </div>
             `);
 
-        element.querySelector("#modal_back_img").src = new URL("images_login_bonus/haikei.png", import.meta.url);
         const modalContents = element.querySelector("#modal_contents");
 
         this.container.appendChild(element);
@@ -36,20 +44,13 @@ export class LoginModal{
             return {...cardData,got};
         });
 
-        for(let i=0; i<cardsData.length; i++){
-            const card = cardsData[i];
-            const newContent = document.createElement('div');
-            newContent.classList.add('modal_content');
-
-            const characterImage = document.createElement('img');
-            characterImage.classList.add('characterImage');
-            if(card.got) {
-                const gotImage = document.createElement('img');
-                gotImage.classList.add('gotImage');
-            }
-            characterImage.src = card.image;
-
-            newContent.appendChild(characterImage);
+        for(const card of cardsData){
+            const newContent = createElementFromHtmlString(`
+                <div class="modal_content">
+                    <img class="characterImage" src="${card.image}">
+                    ${card.got ? `<img class="gotImage" src="${new URL("images_login_bonus/get.png", import.meta.url)}">` : ''}
+                </div>
+            `);
             modalContents.appendChild(newContent);
         }
     }
