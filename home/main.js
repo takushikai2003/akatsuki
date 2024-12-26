@@ -1,6 +1,10 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { LoginModal } from "../componets/loginModal.js";
 
+
+const loginModal = new LoginModal(document.body);
+loginModal.display();
 
 const canvas_wrap = document.getElementById("canvas_wrap");
 
