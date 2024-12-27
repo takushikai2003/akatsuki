@@ -16,7 +16,6 @@ export class LoginModal{
         }
 
         earnLoginBonus();
-        // 図鑑への追加処理が要る
     }
 
 
