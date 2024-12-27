@@ -8,6 +8,10 @@ import { isLoginedToday } from "../lib/loginBonus.js";
 if(!isLoginedToday()){
     const loginModal = new LoginModal(document.body);
     loginModal.display();
+
+    window.addEventListener("click",()=>{
+        loginModal.remove();
+    },{once: true});
 }
 
 

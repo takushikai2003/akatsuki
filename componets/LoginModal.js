@@ -7,6 +7,7 @@ import { cardsData, getCardDataById } from "../data/cards.js";
 export class LoginModal{
     constructor(container){
         this.container = container;
+        this.element = null;
 
         let data = getLoginBonusCollection();
         // すべて取得済みの場合新しく生成
@@ -33,6 +34,8 @@ export class LoginModal{
 
         this.container.appendChild(element);
 
+        this.element = element;
+
         /*ローカルストレージから取得*/
         // data: [id, boolean]形式の配列
         const data = getLoginBonusCollection();
@@ -54,5 +57,10 @@ export class LoginModal{
             `);
             modalContents.appendChild(newContent);
         }
+    }
+
+
+    remove(){
+        this.element.remove();
     }
 }
