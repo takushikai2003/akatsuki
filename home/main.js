@@ -1,5 +1,18 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { LoginModal } from "../componets/loginModal.js";
+import { isLoginedToday } from "../lib/loginBonus.js";
+
+
+
+if(!isLoginedToday()){
+    const loginModal = new LoginModal(document.body);
+    loginModal.display();
+
+    window.addEventListener("click",()=>{
+        loginModal.remove();
+    },{once: true});
+}
 
 
 const canvas_wrap = document.getElementById("canvas_wrap");
