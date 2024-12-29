@@ -1,7 +1,6 @@
-import { availableLoginBonusIds } from "../data/loginCards.js";
 import { getLoginBonusCollection, earnLoginBonus, setNewLoginBonusCollection } from "../lib/loginBonus.js";
 import { createElementFromHtmlString } from "../lib/createElementFromHtmlString.js";
-import { cardsData, getCardDataById } from "../data/cards.js";
+import { getCardDataById } from "../data/cards.js";
 
 
 export class LoginModal{
