@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { DeviceOrientationControls } from "three/addons/controls/DeviceOrientationControls.js";
 import { ObjectClickListener } from "../lib/ObjectClickListener.js";
+import { downLunchBox } from "./lunchBox.js";
 
 
 export async function startThreeScene(){
@@ -74,8 +75,9 @@ export async function startThreeScene(){
     function tick(){
         
         if(catched){
-            plane.rotation.x += 1;
-            plane.rotation.y += 1;
+            downLunchBox();
+            plane.rotation.x=0;
+            plane.rotation.y=0;
         }
         else{
             controls.update();
