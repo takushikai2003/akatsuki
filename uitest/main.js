@@ -1,7 +1,7 @@
 import { NewGuzaiData } from "../componets/NewGuzaiData.js";
 import { CardList } from "../componets/CardList.js";
 import { cardsData } from "../data/cards.js";
-
+import { ScorePanel } from "../componets/ScorePanel.js";
 
 
 const card = {
@@ -21,14 +21,27 @@ document.body.appendChild(newGuzaiData.element);
 await waitWindowClick();
 newGuzaiData.displayNewBadge();
 
+
 await waitWindowClick();
 const card_list_wrapper = document.getElementById("card-list-wrapper");
 const cardList = new CardList(card_list_wrapper);
 cardList.displayCards(cardsData);
-
 await cardListSlideIn();
+
+
 await wait(500);
 cardList.openCollectedCard(2);
+
+
+await wait(1000);
+const scorePanel_element = document.getElementById("score-panel");
+scorePanel_element.style.display = "flex";
+const scorePanel = new ScorePanel(scorePanel_element, 20);
+
+await wait(1000);
+scorePanel.setScore(50);
+
+
 
 
 

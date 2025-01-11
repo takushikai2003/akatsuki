@@ -15,7 +15,7 @@ body {
     gap: 10px;
 
     
-    z-index: 100;
+    z-index: 10;
     position: absolute;
     height: 70vh;
 
@@ -38,4 +38,23 @@ body {
     100% {
         transform: translateY(0);
     }
+}
+
+
+
+#score-panel{
+    /* 縦横中央そろえ */
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 101;
+    position: absolute;
+    height: 70vh;
+
+    /* ウィンドウの下に合わせる */
+    top: calc(100vh - 70vh);
+
+    background-color: #ffe179;
 }

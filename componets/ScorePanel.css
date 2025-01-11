@@ -1,0 +1,23 @@
+#score_base{
+    position: relative;
+    width: 70%;
+}
+
+#score_base_img{
+    width: 100%;
+}
+
+#score_num{
+    position: absolute;
+    
+    top: 10%;
+    left: 10%;
+
+    width: 35%;
+    height: 60%;
+
+    font-size: 80px;
+    font-weight: bold;
+    color: rgb(85, 123, 68);
+    text-align: right;
+}
