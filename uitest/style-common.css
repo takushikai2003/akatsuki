@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#card-list-wrapper {
+    display: none;
+
+    /* gridはJSからかける */
+    /* display: grid; */
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(130px, auto));
+    gap: 10px;
+
+    
+    z-index: 100;
+    position: absolute;
+    height: 70vh;
+
+    /* ウィンドウの下に合わせる */
+    top: calc(100vh - 70vh);
+
+    padding: 10px;
+    background-color: #ffe179;
+}
+
+
+.card-list-slide-in {
+    animation: card-list-slide-in 0.5s ease;
+}
+
+@keyframes card-list-slide-in {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

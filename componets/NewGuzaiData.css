@@ -1,0 +1,74 @@
+#new-guzai-data {
+    height: 100vh;
+    position: relative; /* 疑似要素を正しく配置するために必要 */
+    z-index: 0; /* 基本の要素を下のレイヤーに置く */
+    overflow: hidden; /* はみ出し防止 */
+    text-align: center;
+}
+
+#new-guzai-data::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../UI_images/haikei.jpg");
+    background-repeat: repeat;
+    background-size: 50%;
+    opacity: 0.5; /* 透明度を調整 */
+    z-index: -1; /* 背景として動作させるため */
+}
+
+#character-image {
+    margin-top: 100px;
+}
+
+#character-image img {
+    width: 100%;
+    max-width: 200px;
+}
+
+
+#new-badge { 
+	position: absolute;
+	top: -30px;
+	right: -20px;
+	color: rgb(235,185,136);
+	background: white;
+	font-size: 30px;
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 10px;
+	text-align: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+
+#character-name-wrapper {
+    position: relative;
+    width: 70%;
+    background-color: #ffe179;
+    border-radius: 15px;
+    color: rgb(88, 121, 63);
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+#character-info-wrapper {
+    width: 70%;
+    background-color: #ffe179;
+    border-radius: 15px;
+    color: rgb(88, 121, 63);;
+    margin: 0 auto;
+}
+
+#character-name-wrapper h2 {
+    font-size: 30px;
+}
+
+#character-info-wrapper p {
+    font-size: 25px;
+    margin: 0px;
+}
