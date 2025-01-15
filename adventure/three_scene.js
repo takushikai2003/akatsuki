@@ -3,7 +3,7 @@ import { DeviceOrientationControls } from "three/addons/controls/DeviceOrientati
 import { ObjectClickListener } from "../lib/ObjectClickListener.js";
 
 
-export function startThreeScene(){
+export function startThreeScene(card){
     return new Promise(resolve => {
 
         const w = window.innerWidth;
@@ -25,7 +25,7 @@ export function startThreeScene(){
 
         // テクスチャとして平面に貼り付ける画像をロード
         const textureLoader = new THREE.TextureLoader();
-        const texture = textureLoader.load('../guzai_images/tomato.png');
+        const texture = textureLoader.load(card.image);
 
         // MeshBasicMaterialにテクスチャを渡す。
         const material = new THREE.MeshBasicMaterial({

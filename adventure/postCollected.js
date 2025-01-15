@@ -3,24 +3,16 @@ import { NewGuzaiData } from "../componets/NewGuzaiData.js";
 import { CardList } from "../componets/CardList.js";
 import { cardsData } from "../data/cards.js";
 import { ScorePanel } from "../componets/ScorePanel.js";
+import { addCollectedCardId, getCollectedCardIds } from "../lib/collectedCardIds.js";
 
-export async function postCollected(){
+
+export async function postCollected(card){
     downLunchBox();
 
-
-    const card = {
-        id: 1,
-        name: "おにぎり",
-        image: "../guzai_images/onigiri.png",
-        score: 130,
-        category: "rice"
-    };
-    
     // 新しく取得したもの
     const newGuzaiData = new NewGuzaiData(card);
     newGuzaiDataSlideIn();
     document.body.appendChild(newGuzaiData.element);
-    
     
     
     await waitWindowClick();
@@ -35,16 +27,18 @@ export async function postCollected(){
     
     
     await wait(500);
-    cardList.openCollectedCard(2);
+    cardList.openCollectedCard(card.id);
     
     
     await wait(1000);
     const scorePanel_element = document.getElementById("score-panel");
     scorePanel_element.style.display = "flex";
-    const scorePanel = new ScorePanel(scorePanel_element, 20);
-    
+    const scorePanel = new ScorePanel(scorePanel_element, getCollectedCardIds().length);
+
+    addCollectedCardId(card.id);
+
     await wait(1000);
-    scorePanel.setScore(50);
+    scorePanel.setScore(getCollectedCardIds().length);
     
     
     

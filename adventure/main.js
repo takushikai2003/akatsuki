@@ -37,9 +37,18 @@ if(noSpots){
 
 
 async function startARScene(modelId){
-    startUserCamera();
-    await startThreeScene();
-    stopUserCamera();
 
-    postCollected();
+    // 仮のカード
+    const card = {
+        id: 1,
+        name: "おにぎり",
+        image: "../guzai_images/onigiri.png",
+        score: 130,
+        category: "rice"
+    };
+
+    startUserCamera();
+    await startThreeScene(card);
+    stopUserCamera();
+    postCollected(card);
 }
