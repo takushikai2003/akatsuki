@@ -35,6 +35,7 @@ export async function postCollected(card){
     scorePanel_element.style.display = "flex";
     const scorePanel = new ScorePanel(scorePanel_element, getCollectedCardIds().length);
 
+    // 取得したCardのidをローカル記録する
     addCollectedCardId(card.id);
 
     await wait(1000);
