@@ -18,14 +18,6 @@
   </head>
   <body>
     <button id="go_home" onclick="location.href='../home'">ホームへ</button>
-    <div id="lunchBox">
-      <img id="LBback" src="img/lunchBox_back.png">
-      <div id="LBcontents">
-        <!--この間に具材を入れると弁当箱に入る-->
-        <img src="../guzai_images/onigiri.png">
-      </div>
-      <img id="LBfront" src="img/lunchBox_front.png">
-    </div>
     
     <div id="device-orien-modal" class="device-orien-modal is-hidden">
       <div class="device-orien-modal-inner">
@@ -44,19 +36,8 @@
     <canvas id="canvas" class="canvas"></canvas>
     <video src="" id="camera" class="camera" playsinline></video>
 
-
-    <!-- 取得時 -->
-    <div id="card-list-wrapper"></div>
-    <div id="score-panel"></div>
-    
-
     <script src="./main.js" type="module"></script>
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./post_collected.css">
-
-    <link rel="stylesheet" href="../componets/NewGuzaiData.css">
-    <link rel="stylesheet" href="../componets/CardList.css">
-    <link rel="stylesheet" href="../componets/ScorePanel.css">
 
   </body>
 </html>

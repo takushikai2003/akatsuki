@@ -1,4 +1,16 @@
 /* 図鑑カード */
+#card-container {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #ffe179;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(130px, auto));
+    gap: 10px;
+    
+}
+
 .card {
     background-color: white;
     border-radius: 10px;
@@ -22,21 +34,6 @@
 
 .card p {
     margin: 0;
-}
-
-
-/* 新規カードゲット時のアニメーション */
-.card-slide-in {
-    animation: card-slide-in 0.5s ease;
-}
-
-@keyframes card-slide-in {
-    0% {
-        transform: translateY(100%);
-    }
-    100% {
-        transform: translateY(0);
-    }
 }
 
 /* カードの色 */
