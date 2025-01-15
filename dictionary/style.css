@@ -10,7 +10,7 @@ body {
 
 /* 上部セクション*/
 #top-section {
-    background-image: url("../UI_images/haikei.jpg");
+    background-image: url("./UI_img/haikei.jpg");
     background-repeat: repeat;
     background-size: 50%;
 }
@@ -87,18 +87,4 @@ header a {/*「ホームへ」ボタン*/
 #character-info p {
     font-size: 14px;
     margin-top: 10px;
-}
-
-
-/* 下部セクション */
-#card-container {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background-color: #ffe179;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(130px, auto));
-    gap: 10px;
-    
 }
