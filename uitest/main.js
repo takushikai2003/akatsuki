@@ -14,8 +14,9 @@ const card = {
 
 // 新しく取得したもの
 const newGuzaiData = new NewGuzaiData(card);
-
+newGuzaiDataSlideIn();
 document.body.appendChild(newGuzaiData.element);
+
 
 
 await waitWindowClick();
@@ -42,6 +43,18 @@ await wait(1000);
 scorePanel.setScore(50);
 
 
+
+function newGuzaiDataSlideIn() {
+    return new Promise(resolve => {
+        newGuzaiData.element.classList.add("new-guzai-data-slide-in");
+        newGuzaiData.element.addEventListener("animationend", (e) => {
+            if(e.animationName !== "new-guzai-data-slide-in") return;
+
+            newGuzaiData.element.classList.remove("new-guzai-data-slide-in");
+            resolve();
+        });
+    });
+}
 
 
 

@@ -72,3 +72,18 @@
     font-size: 25px;
     margin: 0px;
 }
+
+
+/* 上からスライドのアニメーション */
+.new-guzai-data-slide-in {
+    animation: new-guzai-data-slide-in 1s ease;
+}
+
+@keyframes new-guzai-data-slide-in {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
