@@ -4,6 +4,7 @@ import { calcCoordinateDistance } from "../lib/calcCoordinateDistance.js";
 import { startUserCamera, stopUserCamera } from "./userCamera.js";
 import { startThreeScene } from "./three_scene.js";
 import { postCollected } from "./postCollected.js";
+import { getCardDataById } from "../data/cards.js";
 
 
 const geolocation = await GetGeolocation();
@@ -36,16 +37,8 @@ if(noSpots){
 
 
 
-async function startARScene(modelId){
-
-    // 仮のカード
-    const card = {
-        id: 1,
-        name: "おにぎり",
-        image: "../guzai_images/onigiri.png",
-        score: 130,
-        category: "rice"
-    };
+async function startARScene(modelId=3){
+    const card = getCardDataById(modelId);
 
     startUserCamera();
     await startThreeScene(card);
