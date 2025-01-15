@@ -18,6 +18,57 @@ export class CardList extends EventTarget{
 
         this.container = container;
         this.cards = [];
+        this.cardElements = [];
+    }
+
+
+    openCollectedCard(collectedCardId){
+        const collectedCardIds = getCollectedCardIds();
+
+        // すでに取得済みのカードの場合は何もしない
+        if(collectedCardIds.includes(collectedCardId)){
+            console.warn("すでに取得済みのカードです");
+            return;
+        }
+
+
+        for(const card of this.cards){
+            if(card.id === collectedCardId){
+                const cardElement = this.cardElements.find(cardElement => cardElement.querySelector("p").textContent === String(card.id).padStart(3, '0'));
+                const name = card.name;
+                const image = card.image;
+                const category = card.category;
+
+                cardElement.querySelector("h3").textContent = name;
+                cardElement.querySelector("img").src = image;
+
+                cardElement.classList.remove("card-color-hatena");
+
+                switch (category) {
+                    case "rice":
+                        cardElement.classList.add("card-color-pink");
+                        break;
+                    case "vegetable":
+                        cardElement.classList.add("card-color-orange");
+                        break;
+                    case "trash":
+                        cardElement.classList.add("card-color-gray");
+                        break;
+                    case "???":
+                        cardElement.classList.add("card-color-hatena");
+                        break;
+                }
+
+
+                cardElement.classList.add("card-slide-in");
+
+                break;
+            }
+
+
+        }
+
+
     }
 
 
@@ -76,6 +127,9 @@ export class CardList extends EventTarget{
             });
         });
 
+
+        this.cards = cards;
+        this.cardElements = cardElements;
 
         return cardElements;
     }

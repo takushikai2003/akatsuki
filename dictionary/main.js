@@ -1,5 +1,5 @@
 import { cardsData } from "../data/cards.js";
-import { getCollectedCardIds, addCollectedCardId } from "../lib/collectedCardIds.js";
+import { getCollectedCardIds } from "../lib/collectedCardIds.js";
 import { CardList } from "../componets/CardList.js";
 
 
@@ -40,6 +40,3 @@ function updateCharacterDetails(card) {
 
 cardList.displayCards(cardsData);
 updateCharacterDetails(cardsData[0]);
-
-addCollectedCardId(7);
-addCollectedCardId(10);
