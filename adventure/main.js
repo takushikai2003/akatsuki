@@ -1,8 +1,9 @@
 import { GetGeolocation } from "../lib/Geolocation.js";
 import { getSpotsData } from "./getSpotsData.js";
 import { calcCoordinateDistance } from "../lib/calcCoordinateDistance.js";
-import { startUserCamera } from "./userCamera.js";
+import { startUserCamera, stopUserCamera } from "./userCamera.js";
 import { startThreeScene } from "./three_scene.js";
+import { postCollected } from "./postCollected.js";
 
 
 const geolocation = await GetGeolocation();
@@ -35,7 +36,10 @@ if(noSpots){
 
 
 
-function startARScene(modelId){
+async function startARScene(modelId){
     startUserCamera();
-    startThreeScene();
+    await startThreeScene();
+    stopUserCamera();
+
+    postCollected();
 }

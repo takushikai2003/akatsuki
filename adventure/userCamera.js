@@ -142,6 +142,11 @@ const hideDeviceOrienModal = () => {
 };
 
 
+// カメラを終了する
+export function stopUserCamera(){
+    video.remove();
+}
+
 
 export function startUserCamera(){
     return new Promise((resolve,reject)=>{
