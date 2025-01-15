@@ -1,8 +1,11 @@
 import { GetGeolocation } from "../lib/Geolocation.js";
 import { getSpotsData } from "./getSpotsData.js";
 import { calcCoordinateDistance } from "../lib/calcCoordinateDistance.js";
-import { startUserCamera } from "./userCamera.js";
+import { startUserCamera, stopUserCamera } from "./userCamera.js";
 import { startThreeScene } from "./three_scene.js";
+import { postCollected } from "./postCollected.js";
+import { getCardDataById } from "../data/cards.js";
+import { selectCardId } from "./selectCardId.js";
 
 
 const geolocation = await GetGeolocation();
@@ -22,7 +25,15 @@ for(const spot of spotsData){
     ){
         noSpots = false;
         console.log(spot.name);
-        startARScene();
+        const cardId = selectCardId();
+        if(cardId == null){
+            alert("すべてのカードを取得しました");
+            console.log("すべてのカードを取得しました");
+            location.href = "../home";
+            break;
+        }
+
+        startARScene(cardId);
         break;
     }
 }
@@ -35,7 +46,11 @@ if(noSpots){
 
 
 
-function startARScene(modelId){
+async function startARScene(modelId){
+    const card = getCardDataById(modelId);
+
     startUserCamera();
-    startThreeScene();
+    await startThreeScene(card);
+    stopUserCamera();
+    postCollected(card);
 }
