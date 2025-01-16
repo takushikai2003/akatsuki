@@ -21,3 +21,17 @@
     color: rgb(85, 123, 68);
     text-align: right;
 }
+
+#dictionary_length{
+    position: absolute;
+    
+    top: 50%;
+    left: 50%;
+
+    width: 35%;
+    height: 60%;
+
+    font-size: 50px;
+    color: #ffe179;
+    text-align: right;
+}

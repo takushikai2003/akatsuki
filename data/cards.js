@@ -21,3 +21,7 @@ export function getCardDataById(id){
     if(typeof id !== "number") throw new Error("idは数値である必要があります");
     return cardsData.find(card => card.id === id);
 }
+
+export function getCardsDataLength(){
+    return cardsData.length;
+}
