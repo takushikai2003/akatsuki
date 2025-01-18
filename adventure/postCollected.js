@@ -1,4 +1,4 @@
-import { downLunchBox } from "./lunchBox.js";
+import { downLunchBox } from "../componets/LunchBox.js";
 import { NewGuzaiData } from "../componets/NewGuzaiData.js";
 import { CardList } from "../componets/CardList.js";
 import { cardsData } from "../data/cards.js";
