@@ -6,6 +6,7 @@ import { startThreeScene } from "./three_scene.js";
 import { postCollected } from "./postCollected.js";
 import { getCardDataById } from "../data/cards.js";
 import { selectCardId } from "./selectCardId.js";
+import { showLunchBox } from "../componets/LunchBox.js";
 
 
 const geolocation = await GetGeolocation();
@@ -49,8 +50,10 @@ if(noSpots){
 async function startARScene(modelId){
     const card = getCardDataById(modelId);
 
+    showLunchBox();
     startUserCamera();
     await startThreeScene(card);
+    
     stopUserCamera();
     postCollected(card);
 }
