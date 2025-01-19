@@ -42,6 +42,10 @@ export function showLunchBox() {
 
         //具材の画像を順番に読み込んで描画
         for (const guzaiId of GuzaisInLunchBox) {
+            if (guzaiId === 0) {
+                guzaiPlaceNumber++;
+                continue;//具材がない場合はスキップ
+            }
             const guzaiData = getCardDataById(guzaiId);
             const imgGuzai = await loadImage(guzaiData.image);
             const n = guzaiPlaceNumber % 3;
