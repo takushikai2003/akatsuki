@@ -27,14 +27,12 @@
 
 /*具材*/
 #LBcontents img{
-    width: 33%;
+    width: 35%;
 }
 
 /* 弁当箱の前の部分 */
 #LBfront{
     position: fixed;
     width: 100%;
-    z-index: 23;
+    z-index: 32;
 }
-
-
