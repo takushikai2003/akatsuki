@@ -26,10 +26,21 @@ export function showLunchBox() {
     const canvas = document.getElementById("lunchBoxCanvas");
     const ctx = canvas.getContext("2d");
 
-    const img = new Image();
-    img.src = "../componets/images_lunchbox/lunchbox_back.png";
-    img.onload = function(){
-        ctx.drawImage(img, 0, 0, w, h);
+    const img_LBback = new Image();
+    img_LBback.src = "../componets/images_lunchbox/lunchbox_back.png";
+    img_LBback.onload = function(){
+        ctx.drawImage(img_LBback, 0, 0, w, h);
     }
-        
+  
+    const img = new Image();
+    img.src = "../guzai_images/onigiri.png";
+    img.onload = function(){
+        ctx.drawImage(img, 20+guzaiPlaceNumber*w*0.33, 0, w*0.33, w*0.33);
+    }
+
+    const img_LBflont = new Image();
+    img_LBflont.src = "../componets/images_lunchbox/lunchbox_front.png";
+    img_LBflont.onload = function(){
+        ctx.drawImage(img_LBflont, 0, 0, w, h);
+    }
 }
