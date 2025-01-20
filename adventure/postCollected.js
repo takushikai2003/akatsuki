@@ -23,7 +23,7 @@ export async function postCollected(card){
     const card_list_wrapper = document.getElementById("card-list-wrapper");
     const cardList = new CardList(card_list_wrapper);
     cardList.displayCards(cardsData);
-    await cardListSlideIn();
+    await cardList.slideIn();
     
     
     await wait(500);
@@ -40,22 +40,6 @@ export async function postCollected(card){
 
     await wait(1000);
     scorePanel.setScore(getCollectedCardIds().length);
-    
-    
-    
-    function cardListSlideIn() {
-        return new Promise(resolve => {
-            card_list_wrapper.style.display = "grid";
-            card_list_wrapper.classList.add("card-list-slide-in");
-            card_list_wrapper.addEventListener("animationend", (e) => {
-                if(e.animationName !== "card-list-slide-in") return;
-    
-                card_list_wrapper.classList.remove("card-list-slide-in");
-                resolve();
-            });
-        });
-    }
-    
     
     
     function waitWindowClick() {

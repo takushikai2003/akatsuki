@@ -22,6 +22,21 @@ export class CardList extends EventTarget{
     }
 
 
+
+    slideIn() {
+        return new Promise(resolve => {
+            this.container.style.display = "grid";
+            this.container.classList.add("card-list-slide-in");
+            this.container.addEventListener("animationend", (e) => {
+                if(e.animationName !== "card-list-slide-in") return;
+    
+                this.container.classList.remove("card-list-slide-in");
+                resolve();
+            });
+        });
+    }
+
+
     openCollectedCard(collectedCardId){
         const collectedCardIds = getCollectedCardIds();
 
@@ -70,6 +85,7 @@ export class CardList extends EventTarget{
 
 
     }
+
 
 
     /** 

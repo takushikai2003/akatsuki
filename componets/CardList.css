@@ -25,6 +25,22 @@
 }
 
 
+/* カードリストのスライド */
+.card-list-slide-in {
+    animation: card-list-slide-in 0.5s ease;
+}
+
+@keyframes card-list-slide-in {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+
 /* 新規カードゲット時のアニメーション */
 .card-slide-in {
     animation: card-slide-in 0.5s ease;
