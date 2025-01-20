@@ -1,38 +1,5 @@
 
-/*******ここから弁当箱のcss********/
-#lunchBox {
-    position: fixed;
-    top: 75%;
-    max-width: 100vw;
-    max-height: 100vh;
-    z-index: 20;
-    
-}
-
-/*弁当箱後ろの部分(LB=LunchBox)*/
-#LBback{
-    position: fixed;
-    width: 100%;
-    z-index: 21;
-}
-
-/*弁当箱の中身*/
-#LBcontents {
-    position: fixed;
-    z-index: 22;
-    height: 100%;
-    width: 90%;
-    margin: 0 5%;
-}
-
-/*具材*/
-#LBcontents img{
-    width: 35%;
-}
-
-/* 弁当箱の前の部分 */
-#LBfront{
-    position: fixed;
-    width: 100%;
-    z-index: 32;
+.lunchBox_canvas{
+    position: relative;
+    top: 0px;
 }

@@ -6,7 +6,7 @@ import { startThreeScene } from "./three_scene.js";
 import { postCollected } from "./postCollected.js";
 import { getCardDataById } from "../data/cards.js";
 import { selectCardId } from "./selectCardId.js";
-import { showLunchBox } from "../componets/LunchBox.js";
+import { LunchBox } from "../componets/LunchBox.js";
 
 
 const ADVENTURE_TEST_MODE = true;
@@ -60,10 +60,16 @@ if(noSpots){
 async function startARScene(modelId){
     const card = getCardDataById(modelId);
 
-    showLunchBox();
+    const lunchBox = new LunchBox(document.getElementById("lunchBox_wrapper"));
+
+    lunchBox.show();
+
+
     startUserCamera();
     await startThreeScene(card);
     
     stopUserCamera();
+
+    lunchBox.down();
     postCollected(card);
 }

@@ -61,3 +61,11 @@ body {
     font-size: 20px;
 }
 
+
+/* 弁当箱 */
+#lunchBox_wrapper {
+    position: fixed;
+    top: 75%;
+    width: 100%;
+    z-index: 20;
+}

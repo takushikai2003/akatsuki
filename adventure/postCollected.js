@@ -1,4 +1,3 @@
-import { downLunchBox } from "../componets/LunchBox.js";
 import { NewGuzaiData } from "../componets/NewGuzaiData.js";
 import { CardList } from "../componets/CardList.js";
 import { cardsData } from "../data/cards.js";
@@ -9,7 +8,6 @@ import { waitWindowClick } from "../lib/waitWindowClick.js";
 
 
 export async function postCollected(card){
-    downLunchBox();
 
     // 新しく取得したもの
     const newGuzaiData = new NewGuzaiData(card, true);
