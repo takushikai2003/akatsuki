@@ -4,8 +4,15 @@ import { LoginModal } from "../componets/loginModal.js";
 import { isLoginedToday } from "../lib/loginBonus.js";
 
 
+const LOGIN_TEST_MODE = true;
 
-if(!isLoginedToday()){
+
+if(LOGIN_TEST_MODE){
+    console.warn("running in login test mode");
+}
+
+
+if(!isLoginedToday() || LOGIN_TEST_MODE){
     const loginModal = new LoginModal(document.body);
     loginModal.display();
 

@@ -4,6 +4,8 @@ import { CardList } from "../componets/CardList.js";
 import { cardsData } from "../data/cards.js";
 import { ScorePanel } from "../componets/ScorePanel.js";
 import { addCollectedCardId, getCollectedCardIds } from "../lib/collectedCardIds.js";
+import { wait } from "../lib/wait.js";
+import { waitWindowClick } from "../lib/waitWindowClick.js";
 
 
 export async function postCollected(card){
@@ -40,22 +42,5 @@ export async function postCollected(card){
 
     await wait(1000);
     scorePanel.setScore(getCollectedCardIds().length);
-    
-    
-    function waitWindowClick() {
-        return new Promise(resolve => {
-            document.documentElement.addEventListener("click", () => {
-                resolve();
-            });
-        });
-    }
-    
-    
-    function wait(ms) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, ms);
-        });
-    }
+
 }

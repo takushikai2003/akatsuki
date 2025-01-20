@@ -9,6 +9,14 @@ import { selectCardId } from "./selectCardId.js";
 import { showLunchBox } from "../componets/LunchBox.js";
 
 
+const ADVENTURE_TEST_MODE = true;
+
+
+if(ADVENTURE_TEST_MODE){
+    console.warn("running in adventure test mode");
+}
+
+
 const geolocation = await GetGeolocation();
 const spotsData = await getSpotsData();
 
@@ -23,6 +31,8 @@ for(const spot of spotsData){
         calcCoordinateDistance(geolocation.latitude, geolocation.longitude, spot.latitude, spot.longitude)
         <=
         radius + geolocation.accuracy
+        ||
+        ADVENTURE_TEST_MODE
     ){
         noSpots = false;
         console.log(spot.name);
