@@ -10,9 +10,9 @@ export async function postCollected(card){
     downLunchBox();
 
     // 新しく取得したもの
-    const newGuzaiData = new NewGuzaiData(card);
-    newGuzaiDataSlideIn();
+    const newGuzaiData = new NewGuzaiData(card, true);
     document.body.appendChild(newGuzaiData.element);
+    newGuzaiData.slideIn();
     
     
     await waitWindowClick();
@@ -40,20 +40,6 @@ export async function postCollected(card){
 
     await wait(1000);
     scorePanel.setScore(getCollectedCardIds().length);
-    
-    
-    
-    function newGuzaiDataSlideIn() {
-        return new Promise(resolve => {
-            newGuzaiData.element.classList.add("new-guzai-data-slide-in");
-            newGuzaiData.element.addEventListener("animationend", (e) => {
-                if(e.animationName !== "new-guzai-data-slide-in") return;
-    
-                newGuzaiData.element.classList.remove("new-guzai-data-slide-in");
-                resolve();
-            });
-        });
-    }
     
     
     

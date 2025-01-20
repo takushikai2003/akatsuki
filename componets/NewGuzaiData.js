@@ -2,7 +2,7 @@ import { createElementFromHtmlString } from "../lib/createElementFromHtmlString.
 
 
 export class NewGuzaiData{
-    constructor(card){
+    constructor(card, hidden=false){
 
         const element = createElementFromHtmlString(`
             <div id="new-guzai-data">
@@ -24,8 +24,22 @@ export class NewGuzaiData{
 
 
         this.element = element;
+        element.hidden = hidden;
     }
 
+
+    slideIn() {
+        return new Promise(resolve => {
+            this.element.hidden = false;
+            this.element.classList.add("new-guzai-data-slide-in");
+            this.element.addEventListener("animationend", (e) => {
+                if(e.animationName !== "new-guzai-data-slide-in") return;
+    
+                this.element.classList.remove("new-guzai-data-slide-in");
+                resolve();
+            });
+        });
+    }
 
     displayNewBadge(){
         this.element.querySelector("#new-badge").hidden = false;
