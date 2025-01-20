@@ -1,4 +1,8 @@
 import { createElementFromHtmlString } from "../lib/createElementFromHtmlString.js";
+import { loadCSS } from "../lib/loadCSS.js";
+
+
+loadCSS(new URL("NewGuzaiData.css", import.meta.url));
 
 
 export class NewGuzaiData{

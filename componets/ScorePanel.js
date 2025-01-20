@@ -1,6 +1,10 @@
 'use strict';
 
 import { getCardsDataLength } from "../data/cards.js";
+import { loadCSS } from "../lib/loadCSS.js";
+
+
+loadCSS(new URL("ScorePanel.css", import.meta.url));
 
 
 export class ScorePanel {

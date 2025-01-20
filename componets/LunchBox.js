@@ -1,5 +1,10 @@
 import { getCardDataById } from "../data/cards.js";
 import { getGuzaiInLunchBox } from "../lib/lunchBox.js";
+import { loadCSS } from "../lib/loadCSS.js";
+
+
+loadCSS(new URL("LunchBox.css", import.meta.url));
+
 
 const lunchBox = document.getElementById("lunchBox");
 

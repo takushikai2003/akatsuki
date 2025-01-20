@@ -15,3 +15,25 @@ img{
     left: 0;
     z-index: 1;
 }
+
+
+#card-list-wrapper {
+    display: none;
+
+    /* gridはJSからかける */
+    /* display: grid; */
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(130px, auto));
+    gap: 10px;
+
+    
+    z-index: 10;
+    position: absolute;
+    height: 70vh;
+
+    /* ウィンドウの下に合わせる */
+    top: calc(100vh - 70vh);
+
+    padding: 10px;
+    background-color: #ffe179;
+}

@@ -1,7 +1,10 @@
 import { getLoginBonusCollection, earnLoginBonus, setNewLoginBonusCollection } from "../lib/loginBonus.js";
 import { createElementFromHtmlString } from "../lib/createElementFromHtmlString.js";
 import { getCardDataById } from "../data/cards.js";
+import { loadCSS } from "../lib/loadCSS.js";
 
+
+loadCSS(new URL("LoginModal.css", import.meta.url));
 
 export class LoginModal{
     constructor(container){

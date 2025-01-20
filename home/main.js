@@ -2,7 +2,10 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoginModal } from "../componets/loginModal.js";
 import { isLoginedToday } from "../lib/loginBonus.js";
-
+import { wait } from "../lib/wait.js";
+import { waitWindowClick } from "../lib/waitWindowClick.js";
+import { CardList } from "../componets/CardList.js";
+import { cardsData } from "../data/cards.js";
 
 const LOGIN_TEST_MODE = true;
 
@@ -16,9 +19,13 @@ if(!isLoginedToday() || LOGIN_TEST_MODE){
     const loginModal = new LoginModal(document.body);
     loginModal.display();
 
-    window.addEventListener("click",()=>{
-        loginModal.remove();
-    },{once: true});
+    await waitWindowClick();
+    loginModal.remove();
+
+    const card_list_wrapper = document.getElementById("card-list-wrapper");
+    const cardList = new CardList(card_list_wrapper);
+    cardList.displayCards(cardsData);
+    await cardList.slideIn();
 }
 
 

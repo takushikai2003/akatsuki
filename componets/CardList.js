@@ -1,6 +1,10 @@
 'use strict';
 
 import { getCollectedCardIds } from "../lib/collectedCardIds.js";
+import { loadCSS } from "../lib/loadCSS.js";
+
+
+loadCSS(new URL("CardList.css", import.meta.url));
 
 /**
  * @typedef CardList
