@@ -5,6 +5,7 @@ import { ScorePanel } from "../componets/ScorePanel.js";
 import { addCollectedCardId, getCollectedCardIds } from "../lib/collectedCardIds.js";
 import { wait } from "../lib/wait.js";
 import { waitWindowClick } from "../lib/waitWindowClick.js";
+import { getCollectedCardIds } from "../lib/collectedCardIds.js";
 
 
 export async function postCollected(card){
@@ -22,7 +23,7 @@ export async function postCollected(card){
     await waitWindowClick();
     const card_list_wrapper = document.getElementById("card-list-wrapper");
     const cardList = new CardList(card_list_wrapper);
-    cardList.displayCards(cardsData);
+    cardList.displayCards(cardsData, getCollectedCardIds());
     await cardList.slideIn();
     
     

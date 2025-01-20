@@ -17,7 +17,10 @@ export class LoginModal{
             data = setNewLoginBonusCollection();
         }
 
-        earnLoginBonus();
+        const loginBonusDetail = earnLoginBonus();
+
+        this.earnedId = loginBonusDetail.id;
+        this.newCollected = loginBonusDetail.newCollected;
     }
 
 

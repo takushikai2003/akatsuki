@@ -6,6 +6,8 @@ import { wait } from "../lib/wait.js";
 import { waitWindowClick } from "../lib/waitWindowClick.js";
 import { CardList } from "../componets/CardList.js";
 import { cardsData } from "../data/cards.js";
+import { getCollectedCardIds } from "../lib/collectedCardIds.js";
+
 
 const LOGIN_TEST_MODE = true;
 
@@ -16,16 +18,35 @@ if(LOGIN_TEST_MODE){
 
 
 if(!isLoginedToday() || LOGIN_TEST_MODE){
+    startLoginBonus();
+}
+
+
+async function startLoginBonus() {
     const loginModal = new LoginModal(document.body);
     loginModal.display();
 
     await waitWindowClick();
     loginModal.remove();
 
-    const card_list_wrapper = document.getElementById("card-list-wrapper");
-    const cardList = new CardList(card_list_wrapper);
-    cardList.displayCards(cardsData);
-    await cardList.slideIn();
+
+    if(loginModal.newCollected){
+        const card_list_wrapper = document.getElementById("card-list-wrapper");
+        const cardList = new CardList(card_list_wrapper);
+
+        const collectedCardIds = getCollectedCardIds();
+
+        // 既にいま新しく取得されたidも配列に入っているので、除く
+        const enableCardIds = collectedCardIds.filter(id=>id != loginModal.earnedId);
+
+        cardList.displayCards(cardsData, enableCardIds);
+        await cardList.slideIn();
+        await wait(500);
+        cardList.openCollectedCard(loginModal.earnedId);
+
+        await wait(1000);
+        card_list_wrapper.remove();
+    }
 }
 
 

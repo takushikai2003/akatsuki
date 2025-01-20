@@ -38,5 +38,5 @@ function updateCharacterDetails(card) {
 }
 
 
-cardList.displayCards(cardsData);
+cardList.displayCards(cardsData, getCollectedCardIds());
 updateCharacterDetails(cardsData[0]);
