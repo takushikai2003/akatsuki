@@ -110,10 +110,13 @@ export class LunchBox extends EventTarget{
             i += speed;
             this.canvas.style.top = i + 'px';
             await wait(10);
-        }        
+        }
     }
 
     async up(){
+        // 下げておく
+        this.canvas.style.top = `${window.innerHeight}px`;
+
         const speed = 7; //移動速度
 
         let i = this.canvas.getBoundingClientRect().top;
