@@ -25,6 +25,7 @@ export class LunchBox{
 
     show(){
         const guzaisInLunchBox = getGuzaiInLunchBox();//弁当箱に入っている具材のidの配列
+
         let guzaiPlaceNumber = 0;
         // const w = window.innerWidth * 0.9;
         const w = this.width;
@@ -49,11 +50,17 @@ export class LunchBox{
     
             //具材の画像を順番に読み込んで描画
             for (const guzaiId of guzaisInLunchBox) {
-                if (guzaiId === 0) {
+                if (guzaiId === null) {
                     guzaiPlaceNumber++;
                     continue;//具材がない場合はスキップ
                 }
+
                 const guzaiData = getCardDataById(guzaiId);
+                if(guzaiData === undefined){
+                    console.error(`id: ${guzaiId} に対応するデータがありません`);
+                    return;
+                }
+
                 const imgGuzai = await loadImage(guzaiData.image);
                 const n = guzaiPlaceNumber % 3;
                 const m = Math.floor(guzaiPlaceNumber / 3);
