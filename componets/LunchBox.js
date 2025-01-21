@@ -112,6 +112,18 @@ export class LunchBox extends EventTarget{
             await wait(10);
         }        
     }
+
+    async up(){
+        const speed = 7; //移動速度
+
+        let i = this.canvas.getBoundingClientRect().top;
+        // this.containerの位置まで戻す
+        while(0 < i){
+            i -= speed;
+            this.canvas.style.top = i + 'px';
+            await wait(10);
+        }
+    }
 }
 
 

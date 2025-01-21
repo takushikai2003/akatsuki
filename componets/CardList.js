@@ -153,4 +153,9 @@ export class CardList extends EventTarget{
 
     }
 
+
+    remove(){
+        this.container.remove();
+    }
+
 }

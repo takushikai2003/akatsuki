@@ -31,6 +31,10 @@ export class NewGuzaiData{
         element.hidden = hidden;
     }
 
+    remove(){
+        this.element.remove();
+    }
+
 
     slideIn() {
         return new Promise(resolve => {

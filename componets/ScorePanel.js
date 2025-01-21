@@ -32,4 +32,8 @@ export class ScorePanel {
     setScore(score){
         this.container.querySelector("#score_num").textContent = score;
     }
+
+    remove(){
+        this.container.remove();
+    }
 }
