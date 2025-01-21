@@ -1,5 +1,5 @@
 import { getCardDataById } from "../data/cards.js";
-import { getGuzaiInLunchBox } from "../lib/lunchBox.js";
+import { getGuzaiInLunchBox } from "../lib/lunchBoxDataManager.js";
 import { loadCSS } from "../lib/loadCSS.js";
 import { wait } from "../lib/wait.js";
 
