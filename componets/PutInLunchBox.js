@@ -5,7 +5,7 @@ import { addGuzaiInLunchBox, getLunchBoxScore } from "../lib/lunchBoxDataManager
 import { wait } from "../lib/wait.js";
 
 loadCSS(new URL("PutInLunchBox.css", import.meta.url));
-
+// ※homeへの遷移機能がある
 
 export class PutInLunchBox{
     constructor(card, container){

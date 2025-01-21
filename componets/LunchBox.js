@@ -127,6 +127,10 @@ export class LunchBox extends EventTarget{
             await wait(10);
         }
     }
+
+    remove(){
+        this.container.remove();
+    }
 }
 
 
