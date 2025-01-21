@@ -2,12 +2,15 @@ import { getCardDataById } from "../data/cards.js";
 import { getGuzaiInLunchBox } from "../lib/lunchBoxDataManager.js";
 import { loadCSS } from "../lib/loadCSS.js";
 import { wait } from "../lib/wait.js";
+import { lunchBoxLength } from "../data/lunchBoxLength.js";
 
 
 await loadCSS(new URL("LunchBox.css", import.meta.url));
 
-export class LunchBox{
+export class LunchBox extends EventTarget{
     constructor(container){
+        super();
+
         this.container = container;
         const canvas = document.createElement("canvas");
         canvas.classList.add("lunchBox_canvas");
@@ -20,10 +23,30 @@ export class LunchBox{
         canvas.height = this.height;
 
         container.appendChild(canvas);
+
+
+        // canvas上に配置する具材の行・列の数を計算
+        this.rows = 3;
+        this.columns = Math.ceil(lunchBoxLength / 3);
+
+        canvas.addEventListener("click", (e) => {
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const n = Math.floor(x / (this.width / this.columns));
+            const m = Math.floor(y / (this.height / this.rows));
+            const placeNumber = m * this.columns + n;
+
+            this.dispatchEvent(new CustomEvent("clickLunchBox", {
+                detail: {
+                    placeNumber: placeNumber
+                }
+            }));
+        });
     }
 
 
-    show(){
+    async show(){
         const guzaisInLunchBox = getGuzaiInLunchBox();//弁当箱に入っている具材のidの配列
 
         let guzaiPlaceNumber = 0;
@@ -33,50 +56,48 @@ export class LunchBox{
     
         const canvas = this.canvas;
         const ctx = canvas.getContext("2d");
-    
-        function loadImage(src) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(img);
-                img.src = src;
-            });
-        }
-    
-        // 画像を順番にロードして描画
-        async function drawImages() {
-            //弁当箱の背景画像を描画
-            const imgLBback = await loadImage("../componets/images_lunchbox/lunchbox_back.png");
-            ctx.drawImage(imgLBback, 0, 0, w, h);
-    
-            //具材の画像を順番に読み込んで描画
-            for (const guzaiId of guzaisInLunchBox) {
-                if (guzaiId === null) {
-                    guzaiPlaceNumber++;
-                    continue;//具材がない場合はスキップ
-                }
 
-                const guzaiData = getCardDataById(guzaiId);
-                if(guzaiData === undefined){
-                    console.error(`id: ${guzaiId} に対応するデータがありません`);
-                    return;
-                }
+        //弁当箱の背景画像を描画
+        const imgLBback = await loadImage("../componets/images_lunchbox/lunchbox_back.png");
+        ctx.drawImage(imgLBback, 0, 0, w, h);
 
-                const imgGuzai = await loadImage(guzaiData.image);
-                const n = guzaiPlaceNumber % 3;
-                const m = Math.floor(guzaiPlaceNumber / 3);
-                const x = (20 + n * w * 0.33 - n * 20);//-n*20は具材画像を少し重ねるために設定
-                const y = -30 + m * 30;
-                ctx.drawImage(imgGuzai, x, y, w * 0.33, w * 0.33);
+
+        //具材の画像を順番に読み込んで描画
+        for (let i=0; i<guzaisInLunchBox.length; i++) {
+            const guzaiId = guzaisInLunchBox[i];
+            
+            if (guzaiId === null) {
                 guzaiPlaceNumber++;
+                continue;//具材がない場合はスキップ
             }
-    
-            //弁当箱の前面画像を描画
-            const imgLBfront = await loadImage("../componets/images_lunchbox/lunchbox_front.png");
-            ctx.drawImage(imgLBfront, 0, 0, w, h);
-    
+
+            const guzaiData = getCardDataById(guzaiId);
+            if(guzaiData === undefined){
+                console.error(`id: ${guzaiId} に対応するデータが無いため描画できません`);
+                return;
+            }
+
+            const imgGuzai = await loadImage(guzaiData.image);
+            const imgSize = w * 0.33;
+
+            const n = guzaiPlaceNumber % this.columns;
+            const m = Math.floor(guzaiPlaceNumber / this.columns);
+
+            // console.log(`n: ${n}, m: ${m}, guzaiPlaceNumber: ${guzaiPlaceNumber}`);
+            
+            const k = 30 * this.columns - 70;//どの程度重ねるか（列数3のときk=20）
+            const x = 20 + n * imgSize - (n * k);
+            const y = (-this.rows*10) + m * (this.rows*10);
+
+            ctx.drawImage(imgGuzai, x, y, imgSize, imgSize);
+
+            guzaiPlaceNumber++;
         }
-    
-        drawImages();
+
+
+        //弁当箱の前面画像を描画
+        const imgLBfront = await loadImage("../componets/images_lunchbox/lunchbox_front.png");
+        ctx.drawImage(imgLBfront, 0, 0, w, h);
     
     }
 
@@ -91,4 +112,13 @@ export class LunchBox{
             await wait(10);
         }        
     }
+}
+
+
+function loadImage(src) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.src = src;
+    });
 }
