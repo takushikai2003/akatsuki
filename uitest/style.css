@@ -6,11 +6,3 @@ body {
     position: relative;
     font-family: Arial, sans-serif;
 }
-
-/* 弁当箱 */
-#lunchBox_wrapper {
-    position: fixed;
-    top: 75%;
-    width: 100%;
-    z-index: 20;
-}

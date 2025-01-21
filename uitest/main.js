@@ -1,13 +1,12 @@
-import { LunchBox } from "../componets/LunchBox.js";
-import { addGuzaiInLunchBox } from "../lib/lunchBoxDataManager.js";
-import { lunchBoxLength } from "../data/lunchBoxLength.js";
+import { PutInLunchBox } from "../componets/PutInLunchBox.js";
 
-const lunchBox = new LunchBox(document.getElementById("lunchBox_wrapper"));
+const test_card = {
+    id: 1,
+    name: "おにぎり",
+    image: "../guzai_images/onigiri.png",
+    score: 130,
+    category: "rice"
+};
 
-lunchBox.show();
-
-
-lunchBox.addEventListener("clickLunchBox", (e) => {
-    addGuzaiInLunchBox(1, e.detail.placeNumber);
-    lunchBox.show();
-});
+const putInLunchBox_wrapper = document.getElementById("put-in-lunchbox-wrapper");
+const putInLunchBox = new PutInLunchBox(test_card, putInLunchBox_wrapper);
