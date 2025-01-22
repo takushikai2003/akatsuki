@@ -1,0 +1,1 @@
+export const lunchBoxLength = 9; //弁当箱に入る具材の個数

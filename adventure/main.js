@@ -71,5 +71,7 @@ async function startARScene(modelId){
     stopUserCamera();
 
     lunchBox.down();
-    postCollected(card);
+    lunchBox.remove();
+    await postCollected(card);
+
 }

@@ -5,6 +5,7 @@ import { ScorePanel } from "../componets/ScorePanel.js";
 import { addCollectedCardId, getCollectedCardIds } from "../lib/collectedCardIds.js";
 import { wait } from "../lib/wait.js";
 import { waitWindowClick } from "../lib/waitWindowClick.js";
+import { PutInLunchBox } from "../componets/PutInLunchBox.js";
 
 
 export async function postCollected(card){
@@ -31,6 +32,8 @@ export async function postCollected(card){
     
     
     await wait(1000);
+    cardList.remove();
+
     const scorePanel_element = document.getElementById("score-panel");
     scorePanel_element.style.display = "flex";
     const scorePanel = new ScorePanel(scorePanel_element, getCollectedCardIds().length);
@@ -41,4 +44,14 @@ export async function postCollected(card){
     await wait(1000);
     scorePanel.setScore(getCollectedCardIds().length);
 
+    await wait(1000);
+    scorePanel.remove();
+
+    newGuzaiData.remove();
+
+    // お弁当に入れる
+    const putInLunchBox_wrapper = document.getElementById("put-in-lunchbox-wrapper");
+    const putInLunchBox = new PutInLunchBox(card, putInLunchBox_wrapper);
+    
+    return;
 }

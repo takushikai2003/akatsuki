@@ -17,6 +17,11 @@ export const cardsData = [
 ];
 
 
+/**
+ * idからCardデータを取得する
+ * @param {number} id 
+ * @returns {Card | undefined}
+ */
 export function getCardDataById(id) {
     if (typeof id !== "number") throw new Error("idは数値である必要があります");
     return cardsData.find(card => card.id === id);
