@@ -4,6 +4,7 @@
  * @type {Card[]} cardsData 
  */
 export const cardsData = [
+    { id: 0, name: "白米", image: "../guzai_images/gohan.png", score: 30, category: "rice" },
     { id: 1, name: "おにぎり", image: "../guzai_images/onigiri_nori.png", score: 130, category: "rice" },
     { id: 2, name: "おにぎり", image: "../guzai_images/onigiri_furikake.png", score: 130, category: "rice" },
     { id: 3, name: "とまと", image: "../guzai_images/tomato.png", score: 100, category: "vegetable" },
