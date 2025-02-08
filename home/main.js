@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { LoginModal } from "../componets/loginModal.js";
+import { LoginModal } from "../componets/LoginModal.js";
 import { isLoginedToday } from "../lib/loginBonus.js";
 import { wait } from "../lib/wait.js";
 import { waitWindowClick } from "../lib/waitWindowClick.js";
