@@ -129,48 +129,10 @@ const checkDeviceOrien = () => {
             } else {
               // 上記以外のブラウザ
             }
-          }
+        }
           
-          // ボタンクリックでrequestDeviceOrientationPermission実行
-          devide_orien_modal_bt.addEventListener('click', requestDeviceOrientationPermission, false);
-
-        // deviceOrienModal = document.getElementById("device-orien-modal");
-        // deviceOrienModalButton = document.getElementById("device-orien-modal-button");
-
-        // if (!deviceOrienModal || !deviceOrienModalButton) {
-        //     reject(new Error("モーダル要素が見つかりません"));
-        //     return;
-        // }
-
-        // const alertMessage =
-        //     "モーションセンサーの使用が拒否されました。\nこのページを開くには、デバイスモーションセンサーの使用を許可する必要があります。\nSafariのアプリを再起動して、モーションセンサーの使用（「動作と方向」へのアクセス）を許可をしてください。";
-
-        // deviceOrienModal.classList.remove("is-hidden");
-
-        // deviceOrienModalButton.addEventListener("click", () => {
-        //     if (
-        //         DeviceOrientationEvent &&
-        //         typeof DeviceOrientationEvent.requestPermission === "function"
-        //     ) {
-        //         DeviceOrientationEvent.requestPermission()
-        //             .then((res) => {
-        //                 if (res === "granted") {
-        //                     hideDeviceOrienModal();
-        //                     resolve();
-        //                 } else {
-        //                     alert(alertMessage);
-        //                     reject(new Error("モーションセンサーが拒否されました"));
-        //                 }
-        //             })
-        //             .catch(() => {
-        //                 alert(alertMessage);
-        //                 reject(new Error("モーションセンサーの許可リクエストに失敗しました"));
-        //             });
-        //     } else {
-        //         alert(alertMessage);
-        //         reject(new Error("デバイスがモーションセンサーをサポートしていません"));
-        //     }
-        // });
+        // ボタンクリックでrequestDeviceOrientationPermission実行
+        devide_orien_modal_bt.addEventListener('click', requestDeviceOrientationPermission, false);
     });
 };
 

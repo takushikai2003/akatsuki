@@ -9,11 +9,28 @@ import { selectCardId } from "./selectCardId.js";
 import { LunchBox } from "../componets/LunchBox.js";
 
 
-const ADVENTURE_TEST_MODE = false;
+const ADVENTURE_TEST_MODE = true;
 
 
 if(ADVENTURE_TEST_MODE){
     console.warn("running in adventure test mode");
+}
+
+
+const devide_orien_modal_bt = document.getElementById("device-orien-modal-bt");
+
+
+await wait_click(devide_orien_modal_bt);
+
+
+function wait_click(element){
+    return new Promise((resolve, reject) => {
+        const clickEvent = () => {
+            resolve();
+            element.removeEventListener("click", clickEvent);
+        }
+        element.addEventListener("click", clickEvent);
+    });
 }
 
 
