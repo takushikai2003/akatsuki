@@ -20,7 +20,7 @@ export class PutInLunchBox{
                 </div>
 
                 <div id="put-in-info-wrapper" hidden>
-                    <p>お弁当の得点</p>
+                    <p>お弁当のランク</p>
                     <p id="lunchbox-score">0点</p>
                 </div>
 
