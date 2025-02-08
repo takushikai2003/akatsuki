@@ -7,7 +7,12 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.device-orien-modal {
+#device-orien-modal-bt{
+    position: fixed;
+    z-index: 1000;
+}
+
+/* .device-orien-modal {
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -17,8 +22,8 @@ body {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.7);
-}
-.device-orien-modal-inner {
+} */
+/* .device-orien-modal-inner {
     width: 90%;
     max-width: 350px;
     box-sizing: border-box;
@@ -28,17 +33,17 @@ body {
     background: white;
     display: flex;
     flex-direction: column;
-}
-.device-orien-modal-button {
+} */
+/* .device-orien-modal-button {
     margin: 1rem auto auto;
     padding: 0.8rem 1.3rem;
     background: black;
     color: white;
     width: 130px;
-}
-.is-hidden {
+} */
+/* .is-hidden {
     display: none;
-}
+} */
 
 
 #canvas {

@@ -9,7 +9,7 @@ import { selectCardId } from "./selectCardId.js";
 import { LunchBox } from "../componets/LunchBox.js";
 
 
-const ADVENTURE_TEST_MODE = true;
+const ADVENTURE_TEST_MODE = false;
 
 
 if(ADVENTURE_TEST_MODE){

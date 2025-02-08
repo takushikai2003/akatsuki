@@ -1,32 +1,32 @@
-
 let deviceOrienModal = null;
 let deviceOrienModalButton = null;
 
 let video = null;
-let videoInput = null;
+let videoInput = [];
 let videoStream = null;
-
 
 const initVideo = () => {
     video = document.getElementById("camera");
+    if (!video) return;
+    
     video.addEventListener("loadedmetadata", adjustVideo);
 
     navigator.mediaDevices
-    .enumerateDevices()
-    .then((devices) => {
-        videoInput = devices.filter((device) => device.kind === "videoinput");
-        getVideo();
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
+        .enumerateDevices()
+        .then((devices) => {
+            videoInput = devices.filter((device) => device.kind === "videoinput");
+            getVideo();
+        })
+        .catch((error) => {
+            console.error("カメラデバイスの取得エラー:", error);
+        });
 };
 
 const setVideo = () => {
     return {
         audio: false,
         video: {
-            deviceId: videoInput,
+            deviceId: videoInput.length > 0 ? { exact: videoInput[0].deviceId } : undefined,
             facingMode: "environment",
             width: { min: 1280, max: 1920 },
             height: { min: 720, max: 1080 },
@@ -37,23 +37,28 @@ const setVideo = () => {
 const getVideo = () => {
     if (videoStream) {
         videoStream.getTracks().forEach((track) => track.stop());
+        if (video) video.srcObject = null;
     }
+
     navigator.mediaDevices
-    .getUserMedia(setVideo())
-    .then(function (stream) {
-        video.srcObject = stream;
-        video.play();
-        videoStream = stream;
-    })
-    .catch(function (error) {
-        console.log(error);
-    alert(
-        "カメラの使用が拒否されています。\nページを再読み込みして使用を許可するか、ブラウザの設定を確認してください。"
-    );
-    });
+        .getUserMedia(setVideo())
+        .then((stream) => {
+            if (!video) return;
+            video.srcObject = stream;
+            video.play();
+            videoStream = stream;
+        })
+        .catch((error) => {
+            console.error("カメラの使用が拒否されました:", error);
+            alert(
+                "カメラの使用が拒否されています。\nページを再読み込みして使用を許可するか、ブラウザの設定を確認してください。"
+            );
+        });
 };
 
 const adjustVideo = () => {
+    if (!video) return;
+
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const videoWidth = video.videoWidth;
@@ -64,100 +69,135 @@ const adjustVideo = () => {
 
     if (windowAspect < videoAspect) {
         let newWidth = videoAspect * windowHeight;
-        video.style.width = newWidth + "px";
-        video.style.marginLeft = -(newWidth - windowWidth) / 2 + "px";
-        video.style.height = windowHeight + "px";
+        video.style.width = `${newWidth}px`;
+        video.style.marginLeft = `${-(newWidth - windowWidth) / 2}px`;
+        video.style.height = `${windowHeight}px`;
         video.style.marginTop = "0px";
-    }
-    else {
-        let newHeight = 1 / (videoAspect / windowWidth);
-        video.style.height = newHeight + "px";
-        video.style.marginTop = -(newHeight - windowHeight) / 2 + "px";
-        video.style.width = windowWidth + "px";
+    } else {
+        let newHeight = windowWidth / videoAspect;
+        video.style.height = `${newHeight}px`;
+        video.style.marginTop = `${-(newHeight - windowHeight) / 2}px`;
+        video.style.width = `${windowWidth}px`;
         video.style.marginLeft = "0px";
     }
 };
 
 const isIos = () => {
-    const ua = navigator.userAgent.toLowerCase();
-    return (
-        ua.indexOf("iphone") >= 0 ||
-        ua.indexOf("ipad") >= 0 ||
-        ua.indexOf("ipod") >= 0
-    );
+    return /iPhone|iPad|iPod/.test(navigator.platform) ||
+           (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 };
+
+
+const devide_orien_modal_bt = document.getElementById("device-orien-modal-bt");
 
 const checkDeviceOrien = () => {
     return new Promise((resolve, reject) => {
-        if (!isIos()) resolve("resolve");
+        if (!isIos()) {
+            devide_orien_modal_bt.remove();
+            resolve();
+            return;
+        }
 
         const deviceOrienEvent = () => {
-            hideDeviceOrienModal();
+            // hideDeviceOrienModal();
+            devide_orien_modal_bt.remove();
             window.removeEventListener("deviceorientation", deviceOrienEvent, false);
-            resolve("resolve");
+            resolve();
         };
         window.addEventListener("deviceorientation", deviceOrienEvent, false);
 
-        deviceOrienModal = document.getElementById("device-orien-modal");
-        deviceOrienModalButton = document.getElementById("device-orien-modal-button");
-        const alertMessage =
-        "モーションセンサーの使用が拒否されました。\nこのページを開くには、デバイスモーションセンサーの使用を許可する必要があります。\nSafariのアプリを再起動して、モーションセンサーの使用（「動作と方向」へのアクセス）を許可をしてください。";
-        deviceOrienModal.classList.remove("is-hidden");
 
-        deviceOrienModalButton.addEventListener("click", () => {
-        if (
-            DeviceMotionEvent &&
-            (DeviceMotionEvent).requestPermission &&
-            typeof (DeviceMotionEvent).requestPermission === "function"
-        ) {
-            (DeviceMotionEvent).requestPermission().then((res) => {});
-        }
-        if (
-            DeviceOrientationEvent &&
-            (DeviceOrientationEvent).requestPermission &&
-            typeof (DeviceOrientationEvent).requestPermission === "function"
-        ) {
-            (DeviceOrientationEvent).requestPermission().then((res) => {
-                console.log(res);
-                if (res === "granted") {
-                    hideDeviceOrienModal();
-                    resolve("resolve");
-                }
+        const requestDeviceOrientationPermission = () => {
+            if (
+              DeviceOrientationEvent &&
+              typeof DeviceOrientationEvent.requestPermission === 'function'
+            ) {
+              // iOS 13+ の Safari
+              // 許可を取得
+              DeviceOrientationEvent.requestPermission()
+              .then(permissionState => {
+                if (permissionState === 'granted') {
+                    devide_orien_modal_bt.remove();
+
+                    resolve();
+                } 
                 else {
-                    alert(alertMessage);
-                    reject("resolve");
+                    alert("デバイスオリエンテーションの許可を取得できませんでした")
                 }
-            });
-        }
-        else {
-            alert(alertMessage);
-            reject("resolve");
-        }
-        });
+              })
+              .catch(console.error) // https通信でない場合などで許可を取得できなかった場合
+            } else {
+              // 上記以外のブラウザ
+            }
+          }
+          
+          // ボタンクリックでrequestDeviceOrientationPermission実行
+          devide_orien_modal_bt.addEventListener('click', requestDeviceOrientationPermission, false);
+
+        // deviceOrienModal = document.getElementById("device-orien-modal");
+        // deviceOrienModalButton = document.getElementById("device-orien-modal-button");
+
+        // if (!deviceOrienModal || !deviceOrienModalButton) {
+        //     reject(new Error("モーダル要素が見つかりません"));
+        //     return;
+        // }
+
+        // const alertMessage =
+        //     "モーションセンサーの使用が拒否されました。\nこのページを開くには、デバイスモーションセンサーの使用を許可する必要があります。\nSafariのアプリを再起動して、モーションセンサーの使用（「動作と方向」へのアクセス）を許可をしてください。";
+
+        // deviceOrienModal.classList.remove("is-hidden");
+
+        // deviceOrienModalButton.addEventListener("click", () => {
+        //     if (
+        //         DeviceOrientationEvent &&
+        //         typeof DeviceOrientationEvent.requestPermission === "function"
+        //     ) {
+        //         DeviceOrientationEvent.requestPermission()
+        //             .then((res) => {
+        //                 if (res === "granted") {
+        //                     hideDeviceOrienModal();
+        //                     resolve();
+        //                 } else {
+        //                     alert(alertMessage);
+        //                     reject(new Error("モーションセンサーが拒否されました"));
+        //                 }
+        //             })
+        //             .catch(() => {
+        //                 alert(alertMessage);
+        //                 reject(new Error("モーションセンサーの許可リクエストに失敗しました"));
+        //             });
+        //     } else {
+        //         alert(alertMessage);
+        //         reject(new Error("デバイスがモーションセンサーをサポートしていません"));
+        //     }
+        // });
     });
 };
 
-const hideDeviceOrienModal = () => {
-    deviceOrienModal.classList.add("is-hidden");
-};
-
-
 // カメラを終了する
-export function stopUserCamera(){
-    video.remove();
+export function stopUserCamera() {
+    if (video) {
+        video.srcObject = null;
+        video.remove();
+        video = null;
+    }
+    if (videoStream) {
+        videoStream.getTracks().forEach((track) => track.stop());
+        videoStream = null;
+    }
 }
 
-
-export function startUserCamera(){
-    return new Promise((resolve,reject)=>{
+// カメラを開始する
+export function startUserCamera() {
+    return new Promise((resolve, reject) => {
         checkDeviceOrien()
-        .then(() => {
-            initVideo();
-            resolve();
-        })
-        .catch((error) => {
-            console.log(error);
-            reject(error);
-        });
+            .then(() => {
+                initVideo();
+                resolve();
+            })
+            .catch((error) => {
+                console.error(error);
+                reject(error);
+            });
     });
 }
