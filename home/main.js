@@ -9,7 +9,7 @@ import { cardsData } from "../data/cards.js";
 import { getCollectedCardIds } from "../lib/collectedCardIds.js";
 
 
-const LOGIN_TEST_MODE = true;
+const LOGIN_TEST_MODE = false;
 
 
 if(LOGIN_TEST_MODE){
